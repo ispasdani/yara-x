@@ -7,6 +7,8 @@ export default defineSchema({
   users: defineTable({
     clerkId: v.string(), // Clerk user ID
     email: v.string(), // User email from Clerk
+    imageUrl: v.optional(v.string()),
+    name: v.string(),
     subscriptionTier: v.union(
       v.literal("free"),
       v.literal("premium"),

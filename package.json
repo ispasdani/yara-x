@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.28.1",
     "@google/generative-ai": "^0.24.1",
     "convex": "^1.25.4",
     "next": "15.3.5",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "svix": "^1.70.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

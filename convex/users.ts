@@ -30,6 +30,8 @@ export const createUser = internalMutation({
   args: {
     clerkId: v.string(),
     email: v.string(),
+    imageUrl: v.optional(v.string()),
+    name: v.string(),
     subscriptionTier: v.union(
       v.literal("free"),
       v.literal("premium"),
@@ -52,6 +54,8 @@ export const createUser = internalMutation({
     await ctx.db.insert("users", {
       clerkId: args.clerkId,
       email: args.email,
+      imageUrl: args.imageUrl,
+      name: args.name,
       subscriptionTier: args.subscriptionTier,
       jurisdiction: args.jurisdiction || "",
       credits: args.credits,
@@ -66,6 +70,8 @@ export const updateUser = internalMutation({
   args: {
     clerkId: v.string(),
     email: v.optional(v.string()),
+    imageUrl: v.optional(v.string()),
+    name: v.string(),
     subscriptionTier: v.optional(
       v.union(v.literal("free"), v.literal("premium"), v.literal("business"))
     ),
@@ -95,6 +101,12 @@ export const updateUser = internalMutation({
     }
     if (args.credits !== undefined) {
       updatePayload.credits = args.credits;
+    }
+    if (args.imageUrl !== undefined) {
+      updatePayload.imageUrl = args.imageUrl;
+    }
+    if (args.name !== undefined) {
+      updatePayload.name = args.name;
     }
 
     await ctx.db.patch(user._id, updatePayload);
