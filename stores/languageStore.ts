@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type Language = "en" | "es" | "fr" | "de"; // Add your supported languages
+
 type LanguageState = {
   currentLanguage: Language;
   availableLanguages: Language[];
@@ -11,13 +12,13 @@ type LanguageState = {
 };
 
 // Option 1: Without persistence (resets on page reload)
-export const useLanguageStore = create<LanguageState>((set, get) => ({
-  currentLanguage: "en",
-  availableLanguages: ["en", "es", "fr", "de"],
-  setLanguage: (language) => set({ currentLanguage: language }),
-  isLanguageSupported: (language) =>
-    get().availableLanguages.includes(language),
-}));
+// export const useLanguageStore = create<LanguageState>((set, get) => ({
+//   currentLanguage: "en",
+//   availableLanguages: ["en", "es", "fr", "de"],
+//   setLanguage: (language) => set({ currentLanguage: language }),
+//   isLanguageSupported: (language) =>
+//     get().availableLanguages.includes(language),
+// }));
 
 // Option 2: With localStorage persistence (recommended)
 export const usePersistedLanguageStore = create<LanguageState>()(
