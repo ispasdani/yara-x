@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type Language = "en" | "es" | "fr" | "de"; // Add your supported languages
+export type Language = "en" | "es" | "fr" | "de" | "ro"; // Add your supported languages
 
 type LanguageState = {
   currentLanguage: Language;
@@ -25,7 +25,7 @@ export const usePersistedLanguageStore = create<LanguageState>()(
   persist(
     (set, get) => ({
       currentLanguage: "en",
-      availableLanguages: ["en", "es", "fr", "de"],
+      availableLanguages: ["en", "es", "fr", "de", "ro"],
       setLanguage: (language) => set({ currentLanguage: language }),
       isLanguageSupported: (language) =>
         get().availableLanguages.includes(language),
