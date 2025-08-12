@@ -18,8 +18,8 @@ export default {
         pricing: { title: "Preturi", href: "/prices" },
         products: { title: "Aplicatii", href: "" },
         dashboard: { title: "Dashboard", href: "/{lang}/dashboard" },
-        contractAnalyzer: {
-          title: "Analizor de Contracte",
+        agentMode: {
+          title: "Modul Agent",
           href: "/{lang}/contract-analyzer",
           description:
             "Un dialog modal care întrerupe utilizatorul cu un conținut important și așteaptă un răspuns.",

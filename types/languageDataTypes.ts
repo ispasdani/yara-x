@@ -14,7 +14,7 @@ export interface LanguageData {
       pricing: { title: string; href: string };
       products: { title: string; href: string };
       dashboard: { title: string; href: string };
-      contractAnalyzer: { title: string; href: string; description: string };
+      agentMode: { title: string; href: string; description: string };
       askALegalQuestion: { title: string; href: string; description: string };
       documentAnalyzer: { title: string; href: string; description: string };
       generateDocument: { title: string; href: string; description: string };

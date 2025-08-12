@@ -4,16 +4,13 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 import Link from "next/link";
 import { usePersistedLanguageStore } from "@/stores/languageStore";
 import { LanguageData } from "@/types/languageDataTypes";
+import MobileNav from "./mobileNav";
 
 const Navbar = () => {
   const { currentLanguage } = usePersistedLanguageStore();
@@ -58,29 +55,6 @@ const Navbar = () => {
     );
   }
 
-  const components: { title: string; href: string; description: string }[] = [
-    {
-      title: ,
-      href: ,
-      description: ,
-    },
-    {
-      title: ,
-      href: ,
-      description: ,
-    },
-    {
-      title: ,
-      href: ,
-      description: ,
-    },
-    {
-      title: ,
-      href: ,
-      description: t("public.publicNav.generateDocument.description"),
-    },
-  ];
-
   return (
     <header className="w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-6 py-4">
@@ -96,66 +70,41 @@ const Navbar = () => {
             </span>
           </div>
 
-          <NavigationMenu>
+          <NavigationMenu className="hidden md:block">
             <NavigationMenuList className="space-x-8">
               {/* About Us Link */}
-              <NavigationMenuItem className="text-muted-foreground hover:text-foreground">
+              <NavigationMenuItem className="text-muted-foreground hover:text-foreground transition-colors">
                 <Link href={langData.public.publicNav.aboutUs.href}>
                   {langData.public.publicNav.aboutUs.title}
                 </Link>
               </NavigationMenuItem>
 
               {/* Pricing Link */}
-              <NavigationMenuItem className="text-muted-foreground hover:text-foreground">
+              <NavigationMenuItem className="text-muted-foreground hover:text-foreground transition-colors">
                 <Link href={langData.public.publicNav.pricing.href}>
                   {langData.public.publicNav.pricing.title}
                 </Link>
               </NavigationMenuItem>
 
               {/* Products Dropdown */}
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>
-                {t("public.publicNav.products.title")}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                  {components.map((component) => (
-                    <ListItem
-                      key={component.title}
-                      title={component.title}
-                      href={buildUrl(component.href)}
-                    >
-                      {component.description}
-                    </ListItem>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+              <NavigationMenuItem className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href={langData.public.publicNav.products.href}>
+                  {langData.public.publicNav.products.title}
+                </Link>
+              </NavigationMenuItem>
+
+              {/* Dashboard */}
+              <NavigationMenuItem className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href={langData.public.publicNav.dashboard.href}>
+                  {langData.public.publicNav.dashboard.title}
+                </Link>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
 
-          <nav className="hidden md:flex items-center space-x-8">
-            <a
-              href="#features"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Features
-            </a>
-            <a
-              href="#about"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              About
-            </a>
-            <a
-              href="#contact"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Contact
-            </a>
-          </nav>
+          <MobileNav />
 
-          <div className="flex items-center space-x-4">
+          <div className="items-center space-x-4 hidden md:flex">
             <Button
               variant="ghost"
               className="text-muted-foreground hover:text-foreground"
