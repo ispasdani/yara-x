@@ -62,7 +62,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose, langData }) => {
           <nav className="flex flex-col p-6 space-y-6 flex-1">
             <Link
               href={langData.public.publicNav.aboutUs.href}
-              className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors py-2 block"
+              className="text-muted-foreground hover:text-foreground transition-colors py-2 block"
               onClick={handleLinkClick}
             >
               {langData.public.publicNav.aboutUs.title}
@@ -70,7 +70,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose, langData }) => {
 
             <Link
               href={langData.public.publicNav.pricing.href}
-              className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors py-2 block"
+              className="text-muted-foreground hover:text-foreground transition-colors py-2 block"
               onClick={handleLinkClick}
             >
               {langData.public.publicNav.pricing.title}
@@ -78,7 +78,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose, langData }) => {
 
             <Link
               href={langData.public.publicNav.products.href}
-              className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors py-2 block"
+              className="text-muted-foreground hover:text-foreground transition-colors py-2 block"
               onClick={handleLinkClick}
             >
               {langData.public.publicNav.products.title}
@@ -86,7 +86,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose, langData }) => {
 
             <Link
               href={langData.public.publicNav.dashboard.href}
-              className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors py-2 block"
+              className="text-muted-foreground hover:text-foreground transition-colors py-2 block"
               onClick={handleLinkClick}
             >
               {langData.public.publicNav.dashboard.title}
