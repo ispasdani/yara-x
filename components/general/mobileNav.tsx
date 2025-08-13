@@ -76,7 +76,7 @@ const MobileNav = () => {
   ];
 
   return (
-    <div className="md:hidden flex justify-center items-center">
+    <div className="md:hidden flex justify-center items-center space-x-8">
       <motion.button
         whileTap={{ scale: 0.9 }}
         whileHover={{ scale: 1.05 }}
@@ -129,14 +129,14 @@ const MobileNav = () => {
             stiffness: 1000,
             damping: 30,
           }}
-          className="fixed inset-0 pt-10 flex flex-col justify-start items-center w-full h-full bg-[#FAFAFA] z-50"
+          className="fixed inset-0 pt-10 flex flex-col justify-start items-center w-full h-full bg-white z-50"
         >
           {/* Close button in mobile overlay */}
           <motion.button
             whileTap={{ scale: 0.9 }}
             whileHover={{ scale: 1.05 }}
             onClick={toggleMenu}
-            className="fixed top-4 right-4"
+            className="fixed top-4 right-5 px-12"
           >
             <motion.svg
               initial={{ rotate: 0 }}
@@ -156,21 +156,21 @@ const MobileNav = () => {
           </motion.button>
 
           {/* Mobile Navigation Items */}
-          <ul className="py-2 flex flex-col items-center w-full gap-4 mt-10">
+          <ul className="py-2 flex flex-col items-center w-full gap-4 mt-10 bg-white">
             {mobileNavItems.map((item) => (
               <Link
                 onClick={() => setIsOpen(false)}
                 href={item.href}
                 key={item.title}
               >
-                <li className="px-4 py-2 text-base font-bold hover:text-accent-foreground">
+                <li className="font-normal px-4 py-2 text-base font-bold text-muted-foreground hover:text-foreground transition-colors">
                   {item.title}
                 </li>
               </Link>
             ))}
           </ul>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 mt-3">
             <Button
               variant="ghost"
               className="text-muted-foreground hover:text-foreground"
