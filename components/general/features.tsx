@@ -30,13 +30,13 @@ const features = [
 
 const Features = () => {
   return (
-    <section id="features" className="py-24 bg-surface">
-      <div className="container mx-auto px-6">
+    <section id="features" className="py-24 bg-gray-50">
+      <div className="container mx-auto px-6 max-w-7xl">
         <div className="text-center mb-20">
-          <h2 className="heading-section mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-serif tracking-tight">
             Comprehensive Legal AI Platform
           </h2>
-          <p className="text-lead max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Our integrated suite of AI tools transforms every aspect of legal work, 
             from document analysis to research and contract management.
           </p>
@@ -44,16 +44,19 @@ const Features = () => {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
-            <div key={index} className="feature-card text-center group">
-              <div className="w-16 h-16 bg-primary/5 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/10 transition-colors">
-                <feature.icon className="h-8 w-8 text-primary" />
+            <div 
+              key={index} 
+              className="bg-white border border-gray-200 rounded-xl p-8 text-center group transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-gray-200/50 hover:border-gray-300"
+            >
+              <div className="w-16 h-16 bg-gray-900/5 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900/10 transition-colors duration-200">
+                <feature.icon className="h-8 w-8 text-gray-900" />
               </div>
               
-              <h3 className="font-serif text-xl font-semibold text-foreground mb-4">
+              <h3 className="font-serif text-xl font-semibold text-gray-900 mb-4 tracking-tight">
                 {feature.title}
               </h3>
               
-              <p className="text-body">
+              <p className="text-base text-gray-600 leading-relaxed">
                 {feature.description}
               </p>
             </div>
