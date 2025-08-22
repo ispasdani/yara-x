@@ -33,7 +33,7 @@ const Features = () => {
     <section id="features" className="py-24 bg-gray-50 w-full">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="text-center mb-20 mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-serif tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-serif">
             Comprehensive Legal AI Platform
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -52,7 +52,7 @@ const Features = () => {
                 <feature.icon className="h-8 w-8 text-gray-900" />
               </div>
               
-              <h3 className="font-serif text-xl font-semibold text-gray-900 mb-4 tracking-tight">
+              <h3 className="font-serif text-xl font-semibold text-gray-900 mb-4">
                 {feature.title}
               </h3>
               
