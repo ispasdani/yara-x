@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="bg-surface border-t border-border">
+    <footer className="bg-surface border-t border-border w-full bg-gray-50">
       <div className="container mx-auto px-6 py-16">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Brand */}
@@ -50,7 +50,7 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center mx-0" >
           <p className="text-muted-foreground text-sm">
             © 2024 LegalAI. All rights reserved.
           </p>
