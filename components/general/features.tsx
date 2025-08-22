@@ -30,9 +30,9 @@ const features = [
 
 const Features = () => {
   return (
-    <section id="features" className="py-24 bg-gray-50">
+    <section id="features" className="py-24 bg-gray-50 w-full">
       <div className="container mx-auto px-6 max-w-7xl">
-        <div className="text-center mb-20">
+        <div className="text-center mb-20 mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-serif tracking-tight">
             Comprehensive Legal AI Platform
           </h2>

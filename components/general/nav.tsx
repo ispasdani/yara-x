@@ -28,8 +28,10 @@ const Navbar = () => {
         );
       } catch (error) {
         // Fallback to English if the language file fails to load
+      
         const ro = await import(`@/consts/ro`);
         setLangData(ro.default.ro);
+        console.error(error);
       }
     };
     loadLanguageData();

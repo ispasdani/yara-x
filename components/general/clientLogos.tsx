@@ -9,10 +9,10 @@ const clientLogos = [
 
 const ClientLogos = () => {
   return (
-    <section className="py-16 bg-background border-t border-border">
-      <div className="container mx-auto px-6">
+    <section className="py-16 w-full bg-white border-t border-gray-200">
+      <div className="container mx-auto px-6 max-w-7xl">
         <div className="text-center mb-12">
-          <p className="text-sm text-muted-foreground tracking-wider uppercase">
+          <p className="text-sm text-gray-500 tracking-wider uppercase font-medium">
             Trusted by leading law firms worldwide
           </p>
         </div>
@@ -21,7 +21,7 @@ const ClientLogos = () => {
           {clientLogos.map((client, index) => (
             <div key={index} className="text-center">
               <div className="h-12 flex items-center justify-center">
-                <span className="text-muted-foreground font-medium text-sm tracking-wide">
+                <span className="text-gray-500 font-medium text-sm tracking-wide hover:text-gray-700 transition-colors duration-200">
                   {client}
                 </span>
               </div>
