@@ -116,9 +116,29 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-playfair), serif;
+  }
 }
 
+@layer utilities {
+  /* Font family utilities */
+  .font-serif {
+    font-family: var(--font-playfair), serif;
+  }
+  
+  .font-sans {
+    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  }
+  
+  /* Custom letter spacing for headings */
+  .tracking-tight {
+    letter-spacing: -0.025em;
+  }
+}
