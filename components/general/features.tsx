@@ -25,11 +25,6 @@ const features = [
     icon: BookOpen,
     title: "Contract Template Library",
     description: "Extensive collection of legal templates with AI-powered customization and clause recommendations."
-  },
-  {
-    icon: BookOpen,
-    title: "Contract Template Library",
-    description: "Extensive collection of legal templates with AI-powered customization and clause recommendations."
   }
 ];
 
