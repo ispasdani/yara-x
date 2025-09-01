@@ -6,6 +6,7 @@ import Features from "@/components/general/features";
 import Footer from "@/components/general/footer";
 import Hero from "@/components/general/hero";
 import Pricing from "@/components/general/pricing";
+import WorkflowVideo from "@/components/general/workflowVideo";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { usePersistedLanguageStore } from "@/stores/languageStore";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <Hero />
       <ClientLogos />
       <Features />
+      <WorkflowVideo />
       <CTA />
       <Pricing />
       <Footer/>
