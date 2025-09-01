@@ -5,6 +5,7 @@ import CTA from "@/components/general/cta";
 import Features from "@/components/general/features";
 import Footer from "@/components/general/footer";
 import Hero from "@/components/general/hero";
+import Pricing from "@/components/general/pricing";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { usePersistedLanguageStore } from "@/stores/languageStore";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <ClientLogos />
       <Features />
       <CTA />
+      <Pricing />
       <Footer/>
 
       <p>Test: {currentLanguage}</p>
