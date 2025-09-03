@@ -1,6 +1,6 @@
 "use client";
 
-import { Language, usePersistedLanguageStore } from "@/stores/languageStore";
+import { Language, usePersistedLanguageStore } from "@/store/languageStore";
 
 export function LanguageSelector() {
   const { currentLanguage, availableLanguages, setLanguage } =

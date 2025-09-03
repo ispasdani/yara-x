@@ -1,6 +1,6 @@
 // hooks/useLanguageData.ts
 import { useEffect, useState } from "react";
-import { usePersistedLanguageStore } from "@/stores/languageStore";
+import { usePersistedLanguageStore } from "@/store/languageStore";
 import { LanguageData } from "@/types/languageDataTypes";
 
 export const useLanguageData = () => {

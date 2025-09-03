@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import InteractiveWorkflowDemo from "../interactiveWorkflowDemo/interactiveWorkflowDemo";
 
 const Hero = () => {
   return (
@@ -64,32 +65,7 @@ const Hero = () => {
           </div>
 
           {/* Right Content - Product Mockup */}
-          <div className="relative">
-            <div
-              className="p-4 rounded-2xl"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to bottom right, var(--card), var(--background))",
-                boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <img
-                src={""}
-                alt="Legal platform interface showing document review and AI analysis"
-                className="w-full h-auto rounded-lg"
-              />
-            </div>
-
-            {/* Floating Elements */}
-            <div
-              className="absolute -top-4 -right-4 w-24 h-24 rounded-full"
-              style={{ backgroundColor: "color-mix(in oklch, var(--primary) 5%, transparent)" }}
-            ></div>
-            <div
-              className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full"
-              style={{ backgroundColor: "color-mix(in oklch, var(--primary) 30%, transparent)" }}
-            ></div>
-          </div>
+          <InteractiveWorkflowDemo />
         </div>
       </div>
     </section>

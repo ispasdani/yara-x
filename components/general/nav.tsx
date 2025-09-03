@@ -8,7 +8,7 @@ import {
   NavigationMenuList,
 } from "../ui/navigation-menu";
 import Link from "next/link";
-import { usePersistedLanguageStore } from "@/stores/languageStore";
+import { usePersistedLanguageStore } from "@/store/languageStore";
 import { LanguageData } from "@/types/languageDataTypes";
 import { Menu } from "lucide-react";
 import MobileNav from "./mobileNav";
