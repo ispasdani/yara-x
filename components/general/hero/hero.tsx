@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import InteractiveWorkflowDemo from "../interactiveWorkflowDemo/interactiveWorkflowDemo";
+import ChatInput from "./chatInput";
 
 const Hero = () => {
   return (
@@ -8,10 +9,10 @@ const Hero = () => {
       className="relative overflow-hidden"
       style={{ backgroundColor: "var(--background)" }}
     >
-      <div className="container mx-auto px-6 py-24 lg:py-32">
+      <div className="container mx-auto px-6 py-24">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             <div
               className="inline-flex items-center px-4 py-2 rounded-full border text-sm"
               style={{
@@ -31,7 +32,7 @@ const Hero = () => {
               className="text-5xl md:text-6xl font-bold leading-tight font-serif"
               style={{ color: "var(--foreground)" }}
             >
-              Unleash your legal expertise
+              Law Made Simple with AI
             </h1>
 
             <p
@@ -39,9 +40,13 @@ const Hero = () => {
               style={{ color: "var(--muted-foreground)" }}
             >
               Transform your legal practice with AI-powered document review,
-              intelligent research, and automated workflows. Experience
-              precision, speed, and collaboration like never before.
+              intelligent research, and automated workflows without compromising
+              precision.
             </p>
+
+            <div className="my-8">
+              <ChatInput />
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
