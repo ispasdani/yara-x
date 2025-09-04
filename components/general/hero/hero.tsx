@@ -28,10 +28,7 @@ const Hero = () => {
               Introducing AI-Powered Legal Workflows
             </div>
 
-            <h1
-              className="text-5xl md:text-6xl font-bold leading-tight font-serif"
-              style={{ color: "var(--foreground)" }}
-            >
+            <h1 className="text-5xl md:text-6xl font-bold leading-tight font-serif text-foreground">
               Law Made Simple with AI
             </h1>
 

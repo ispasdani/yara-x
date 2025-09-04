@@ -28,7 +28,7 @@ const Navbar = () => {
         );
       } catch (error) {
         // Fallback to English if the language file fails to load
-      
+
         const ro = await import(`@/consts/ro`);
         setLangData(ro.default.ro);
         console.error(error);
@@ -102,7 +102,7 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Navigation */}
-            <NavigationMenu className="hidden md:block">
+            <NavigationMenu className="hidden md:block text-sm">
               <NavigationMenuList className="space-x-8">
                 <NavigationMenuItem className="text-muted-foreground hover:text-foreground transition-colors">
                   <Link href={langData.public.publicNav.aboutUs.href}>
@@ -134,7 +134,7 @@ const Navbar = () => {
             <div className="items-center space-x-4 hidden md:flex">
               <Button
                 variant="ghost"
-                className="text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground text-sm"
               >
                 Sign In
               </Button>
