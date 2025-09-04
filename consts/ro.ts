@@ -1,4 +1,8 @@
-export default {
+// ro.ts
+// (Optional) import your type if you have one:
+// import { LanguageData } from "@/types/languageDataTypes";
+
+const ro = {
   ro: {
     public: {
       title: "Platformă AI Juridică",
@@ -60,29 +64,14 @@ export default {
           "Obține sfaturi juridice bazate pe AI și analiză de documente.",
         askQuestion: "Pune o întrebare juridică",
       },
-      sidebarApplicationLabel: {
-        title: "Aplicatii",
-      },
-      sidebarDashboard: {
-        title: "Acasa",
-        url: "/{lang}/dashboard",
-      },
-      sidebarContract: {
-        title: "Analizeaza Contract",
-        url: "/{lang}/contract-analyzer",
-      },
-      sidebarAskAQuestion: {
-        title: "Pune o intrebare",
-        url: "/{lang}/legal-question",
-      },
-      sidebarDocumentAnalyzer: {
-        title: "Analizeaza Documente",
-        url: "/{lang}/document-analyzer",
-      },
-      sidebarGenerateDocument: {
-        title: "Redacteaza Documente",
-        url: "/{lang}/generate-document",
-      },
+      sidebarApplicationLabel: { title: "Aplicatii" },
+      sidebarDashboard: { title: "Acasa", url: "/{lang}/dashboard" },
+      sidebarContract: { title: "Analizeaza Contract", url: "/{lang}/contract-analyzer" },
+      sidebarAskAQuestion: { title: "Pune o intrebare", url: "/{lang}/legal-question" },
+      sidebarDocumentAnalyzer: { title: "Analizeaza Documente", url: "/{lang}/document-analyzer" },
+      sidebarGenerateDocument: { title: "Redacteaza Documente", url: "/{lang}/generate-document" },
     },
   },
 };
+
+export default ro;
