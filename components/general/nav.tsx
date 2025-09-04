@@ -22,14 +22,16 @@ const Navbar = () => {
   useEffect(() => {
     const loadLanguageData = async () => {
       try {
-        const dataModule = await import(`@/consts/${currentLanguage}.ts`);
+        const dataModule = await import(
+          `@/consts/${currentLanguage}/${currentLanguage}`
+        );
         setLangData(
           dataModule.default[currentLanguage] || dataModule.default.en
         );
       } catch (error) {
         // Fallback to English if the language file fails to load
 
-        const ro = await import(`@/consts/ro`);
+        const ro = await import(`@/consts/ro/ro`);
         setLangData(ro.default.ro);
         console.error(error);
       }

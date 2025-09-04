@@ -10,7 +10,7 @@ export const useLanguageData = () => {
   useEffect(() => {
     const loadLanguageData = async () => {
       try {
-        const dataModule = await import(`@/consts/${currentLanguage}`);
+        const dataModule = await import(`@/consts/${currentLanguage}/${currentLanguage}`);
         setLangData(
           dataModule.default[currentLanguage] || dataModule.default.en
         );
@@ -18,7 +18,7 @@ export const useLanguageData = () => {
         // Fallback to Romanian (or English) if the language file fails to load
         const err = error as Error;
         console.error(err.message);
-        const ro = await import(`@/consts/ro`);
+        const ro = await import(`@/consts/ro/ro`);
         setLangData(ro.default.ro);
       }
     };
