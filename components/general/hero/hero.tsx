@@ -35,10 +35,7 @@ const Hero = () => {
               Law Made Simple with AI
             </h1>
 
-            <p
-              className="text-xl leading-relaxed max-w-lg"
-              style={{ color: "var(--muted-foreground)" }}
-            >
+            <p className="text-lg leading-relaxed max-w-lg text-muted-foreground">
               Transform your legal practice with AI-powered document review,
               intelligent research, and automated workflows without compromising
               precision.
