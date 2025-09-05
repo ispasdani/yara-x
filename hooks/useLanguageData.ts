@@ -15,7 +15,6 @@ export const useLanguageData = () => {
           dataModule.default[currentLanguage] || dataModule.default.en
         );
       } catch (error) {
-        // Fallback to Romanian (or English) if the language file fails to load
         const err = error as Error;
         console.error(err.message);
         const ro = await import(`@/consts/ro/ro`);

@@ -1,9 +1,14 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import InteractiveWorkflowDemo from "../interactiveWorkflowDemo/interactiveWorkflowDemo";
 import ChatInput from "./chatInput";
+import { useLanguageData } from "@/hooks/useLanguageData";
 
 const Hero = () => {
+  const { langData } = useLanguageData();
+
   return (
     <section
       className="relative overflow-hidden"
@@ -25,7 +30,7 @@ const Hero = () => {
                 className="w-2 h-2 rounded-full mr-2"
                 style={{ backgroundColor: "var(--primary)" }}
               ></span>
-              Introducing AI-Powered Legal Workflows
+              {langData?.public.hero.floatingMessage.title}
             </div>
 
             <h1 className="text-5xl md:text-6xl font-bold leading-tight font-serif text-foreground">

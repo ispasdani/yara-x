@@ -8,36 +8,13 @@ import {
   NavigationMenuList,
 } from "../ui/navigation-menu";
 import Link from "next/link";
-import { usePersistedLanguageStore } from "@/store/languageStore";
-import { LanguageData } from "@/types/languageDataTypes";
 import { Menu } from "lucide-react";
 import MobileNav from "./mobileNav";
+import { useLanguageData } from "@/hooks/useLanguageData";
 
 const Navbar = () => {
-  const { currentLanguage } = usePersistedLanguageStore();
-  const [langData, setLangData] = useState<LanguageData | null>(null);
+  const { langData } = useLanguageData();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // Load language data dynamically
-  useEffect(() => {
-    const loadLanguageData = async () => {
-      try {
-        const dataModule = await import(
-          `@/consts/${currentLanguage}/${currentLanguage}`
-        );
-        setLangData(
-          dataModule.default[currentLanguage] || dataModule.default.en
-        );
-      } catch (error) {
-        // Fallback to English if the language file fails to load
-
-        const ro = await import(`@/consts/ro/ro`);
-        setLangData(ro.default.ro);
-        console.error(error);
-      }
-    };
-    loadLanguageData();
-  }, [currentLanguage]);
 
   // Prevent body scroll when mobile menu is open and fix overflow issues
   useEffect(() => {
