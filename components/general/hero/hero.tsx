@@ -1,13 +1,40 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import InteractiveWorkflowDemo from "../interactiveWorkflowDemo/interactiveWorkflowDemo";
 import ChatInput from "./chatInput";
 import { useLanguageData } from "@/hooks/useLanguageData";
+import type { LanguageData } from "@/types/languageDataTypes";
 
-const Hero = () => {
+const DemoSkeleton = () => (
+  <div className="h-[360px] w-full rounded-xl border border-border/50 bg-muted/30 animate-pulse" />
+);
+
+// Lazy-load the heavy demo
+const InteractiveWorkflowDemo = dynamic(
+  () => import("../interactiveWorkflowDemo/interactiveWorkflowDemo"),
+  { ssr: false, loading: () => <DemoSkeleton /> }
+);
+
+const DEFAULT_HERO: LanguageData["public"]["hero"] = {
+  floatingMessage: { title: "AI-powered legal automation" },
+  title: { title: "Law Made Simple with AI" },
+  description: {
+    title:
+      "Transform your legal practice with AI-powered document review, intelligent research, and automated workflows without compromising precision.",
+  },
+  chatPlaceholder: {
+    title: "Ask anything about legal documents or upload a file...",
+  },
+  chatGuidelines: { title: "Press Enter to send • Shift+Enter for a new line" },
+  primaryButtonText: { title: "Book a Demo" },
+  secondaryButtonText: { title: "Watch Overview" },
+};
+
+export default function Hero() {
   const { langData } = useLanguageData();
+  const t = langData?.public.hero ?? DEFAULT_HERO;
 
   return (
     <section
@@ -16,7 +43,7 @@ const Hero = () => {
     >
       <div className="container mx-auto px-6 py-24">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Content */}
+          {/* Left: fully SSR-visible text ✅ */}
           <div className="space-y-6">
             <div
               className="inline-flex items-center px-4 py-2 rounded-full border text-sm"
@@ -29,51 +56,47 @@ const Hero = () => {
               <span
                 className="w-2 h-2 rounded-full mr-2"
                 style={{ backgroundColor: "var(--primary)" }}
-              ></span>
-              {langData?.public.hero.floatingMessage.title}
+              />
+              {t.floatingMessage.title}
             </div>
 
             <h1 className="text-5xl md:text-6xl font-bold leading-tight font-serif text-foreground">
-              Law Made Simple with AI
+              {t.title.title}
             </h1>
 
             <p className="text-lg leading-relaxed max-w-lg text-muted-foreground">
-              Transform your legal practice with AI-powered document review,
-              intelligent research, and automated workflows without compromising
-              precision.
+              {t.description.title}
             </p>
 
             <div className="my-8">
-              <ChatInput />
+              <ChatInput /* placeholder={t.chatPlaceholder.title} */ />
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
-                className="inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-lg transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2"
+                className="inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-lg"
                 style={{
                   backgroundColor: "var(--primary)",
                   color: "var(--primary-foreground)",
                 }}
               >
-                Book a Demo
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                {t.primaryButtonText.title}
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
                 variant="ghost"
                 className="hover:text-foreground"
                 style={{ color: "var(--muted-foreground)" }}
               >
-                Watch Overview
+                {t.secondaryButtonText.title}
               </Button>
             </div>
           </div>
 
-          {/* Right Content - Product Mockup */}
+          {/* Right: lazy-loaded demo with skeleton (perf/UX) */}
           <InteractiveWorkflowDemo />
         </div>
       </div>
     </section>
   );
-};
-
-export default Hero;
+}

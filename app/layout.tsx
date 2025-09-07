@@ -31,8 +31,24 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://yourdomain.com"), // <-- change to your real domain
   title: "Legal AI Platform",
   description: "Transform your legal practice with AI-powered tools",
+  alternates: {
+    canonical: "/", // canonical for the homepage
+  },
+  openGraph: {
+    title: "Legal AI Platform",
+    description: "Transform your legal practice with AI-powered tools",
+    url: "/",
+    siteName: "Your Brand",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Legal AI Platform",
+    description: "Transform your legal practice with AI-powered tools",
+  },
 };
 
 export default function RootLayout({
@@ -55,14 +71,12 @@ export default function RootLayout({
           min-h-screen
         `}
         style={{
-          fontFamily: 'var(--font-inter), system-ui, -apple-system, sans-serif'
+          fontFamily: "var(--font-inter), system-ui, -apple-system, sans-serif",
         }}
       >
         <ConvexClientProvider>
           <Navbar />
-          <main className="relative">
-            {children}
-          </main>
+          <main className="relative">{children}</main>
         </ConvexClientProvider>
       </body>
     </html>
