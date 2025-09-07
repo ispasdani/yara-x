@@ -3,6 +3,27 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes border-rotate { to { --border-angle: 360deg; } }
+
+:root {
+  /* pick the exact tone you want; using card as a sane default */
+  --surface: var(--card);
+}
+.dark {
+  --surface: var(--card);
+}
+
+/* also expose it to Tailwind's color system so `bg-surface/50` works */
+@theme inline {
+  --color-surface: var(--surface);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -127,7 +148,23 @@
   }
 }
 
+
+
 @layer utilities {
+  .animate-border { animation: border-rotate 4s linear infinite; }
+
+  .conic-border {
+    background:
+      linear-gradient(45deg, var(--surface), var(--background) 50%, var(--surface)) padding-box,
+      conic-gradient(
+        from var(--border-angle),
+        color-mix(in oklch, var(--border) 48%, transparent) 80%,
+        #fb7185 86%, #a21caf 90%, #6366f1 94%,
+        color-mix(in oklch, var(--border) 48%, transparent)
+      ) border-box;
+    border: 1px solid transparent; /* lets the conic show as the “border” */
+  }
+
   /* Font family utilities */
   .font-serif {
     font-family: var(--font-playfair), serif;
