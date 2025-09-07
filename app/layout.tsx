@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import ConvexClientProvider from "./providers/ConvexClientProvider";
 import Navbar from "@/components/general/nav";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import LanguageSelector from "@/components/general/LanguageSelector";
 
 // Keep your existing fonts
 const geistSans = Geist({
@@ -75,8 +77,11 @@ export default function RootLayout({
         }}
       >
         <ConvexClientProvider>
-          <Navbar />
-          <main className="relative">{children}</main>
+          <TooltipProvider>
+            <Navbar />
+            <main className="relative">{children}</main>
+            <LanguageSelector />
+          </TooltipProvider>
         </ConvexClientProvider>
       </body>
     </html>

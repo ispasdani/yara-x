@@ -1,8 +1,7 @@
 // stores/languageStore.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-export type Language = "en" | "es" | "fr" | "de" | "ro"; // Add your supported languages
+import { LANG_CODES, DEFAULT_LANG, type Language } from "@/lib/i18n/languages";
 
 type LanguageState = {
   currentLanguage: Language;
@@ -24,15 +23,13 @@ type LanguageState = {
 export const usePersistedLanguageStore = create<LanguageState>()(
   persist(
     (set, get) => ({
-      currentLanguage: "en",
-      availableLanguages: ["en", "es", "fr", "de", "ro"],
+      currentLanguage: DEFAULT_LANG,
+      availableLanguages: LANG_CODES,
       setLanguage: (language) => set({ currentLanguage: language }),
-      isLanguageSupported: (language) =>
-        get().availableLanguages.includes(language),
+      isLanguageSupported: (language) => get().availableLanguages.includes(language),
     }),
     {
-      name: "language-storage", // localStorage key
-      // Optional: Only persist specific fields
+      name: "language-storage",
       partialize: (state) => ({ currentLanguage: state.currentLanguage }),
     }
   )
