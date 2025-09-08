@@ -50,7 +50,7 @@ const ChatInput = () => {
 
   const handleSubmit = () => {
     if (inputText.trim() || uploadedDocument) {
-      router.push("/legal-chat");
+      router.push("/chat");
     }
   };
 

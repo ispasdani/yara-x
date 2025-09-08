@@ -69,19 +69,7 @@ export default function Hero() {
             </p>
 
             <div className="my-8">
-              <ChatInput
-                inputText={""}
-                uploadedDocument={null}
-                onInputChange={function (text: string): void {
-                  throw new Error("Function not implemented.");
-                }}
-                onDocumentUpload={function (file: File | null): void {
-                  throw new Error("Function not implemented.");
-                }}
-                onSubmit={function (): void {
-                  throw new Error("Function not implemented.");
-                }} /* placeholder={t.chatPlaceholder.title} */
-              />
+              <ChatInput />
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
