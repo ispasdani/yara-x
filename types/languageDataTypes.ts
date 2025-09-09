@@ -19,5 +19,24 @@ export interface LanguageData {
       documentAnalyzer: { title: string; href: string; description: string };
       generateDocument: { title: string; href: string; description: string };
     };
+    interactiveWorkflowDemo: {
+      nodeTitle: { title: string };
+      nodeOneTitle: { title: string };
+      runBtn: { title: string };
+      saveBtn: { title: string };
+      shareBtn: { title: string };
+      nodeOneOptionOneTitle: { title: string };
+      nodeOneOptionOneDescription: { title: string };
+      nodeOneOptionTwoTitle: { title: string };
+      nodeOneOptionTwoDescription: { title: string };
+      nodeTwoTitle: { title: string };
+      nodeTwoOptionOneTitle: { title: string };
+      nodeTwoOptionOneDescription: { title: string };
+      nodeTwoOptionTwoTitle: { title: string };
+      nodeTwoOptionTwoDescription: { title: string };
+      nodeThreeTitle: { title: string };
+      nodeThreeOptionOneTitle: { title: string };
+      nodeThreeOptionOneDescription: { title: string };
+    }
   };
 }
