@@ -16,6 +16,16 @@ const interactiveWorkflowDemo = {
     nodeThreeTitle: { title: "Strategy" },
     nodeThreeOptionOneTitle: { title: "Legal Strategy" },
     nodeThreeOptionOneDescription: { title: "Generate legal recommendations" },
+    nodeCardOneTitle: { title: "Upload Rental Contract" },
+    nodeCardOneDescription: { title: "Upload the rental contract" },
+    nodeCardTwoTitle: { title: "Analyze Contract Terms" },
+    nodeCardTwoDescription: { title: "Extract key clauses, terms and obligations" },
+    nodeCardThreeTitle: { title: "Research Tenant Rights" },
+    nodeCardThreeDescription: { title: "Research applicable tenant rights and protections" },
+    nodeCardFourTitle: { title: "Classify Dispute Type" },
+    nodeCardFourDescription: { title: "Categorize dispute type and severity level" },
+    nodeCardFiveTitle: { title: "Legal Strategy" },
+    nodeCardFiveDescription: { title: "Generate recommended legal actions and next steps" },
 };
 
 export default interactiveWorkflowDemo;

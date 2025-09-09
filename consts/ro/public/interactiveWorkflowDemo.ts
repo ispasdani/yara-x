@@ -16,6 +16,16 @@ const interactiveWorkflowDemo = {
   nodeThreeTitle: { title: "Strategie" },
   nodeThreeOptionOneTitle: { title: "Strategie juridică" },
   nodeThreeOptionOneDescription: { title: "Generează recomandări juridice" },
+  nodeCardOneTitle: { title: "Încarcă contractul de închiriere" },
+  nodeCardOneDescription: { title: "Încarcă contractul de închiriere" },
+  nodeCardTwoTitle: { title: "Analizează clauzele contractuale" },
+  nodeCardTwoDescription: { title: "Extrage clauzele, termenii și obligațiile cheie" },
+  nodeCardThreeTitle: { title: "Cercetează drepturile chiriașului" },
+  nodeCardThreeDescription: { title: "Cercetează drepturile și protecțiile aplicabile ale chiriașului" },
+  nodeCardFourTitle: { title: "Clasifică tipul litigiului" },
+  nodeCardFourDescription: { title: "Încadrează tipul litigiului și nivelul de gravitate" },
+  nodeCardFiveTitle: { title: "Strategie juridică" },
+  nodeCardFiveDescription: { title: "Generează acțiunile juridice recomandate și pașii următori" },
 };
 
 export default interactiveWorkflowDemo;

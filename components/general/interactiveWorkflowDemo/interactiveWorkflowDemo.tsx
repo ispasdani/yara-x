@@ -65,16 +65,15 @@ const ContractUploadNode = ({ data, selected }: NodeProps) => {
             <Upload className="h-3 w-3 text-primary-foreground" />
           </div>
           {(data as NodeData).label ||
-            langData?.public.interactiveWorkflowDemo.nodeOneOptionOneTitle
-              .title}
+            langData?.public.interactiveWorkflowDemo.nodeCardOneTitle.title}
         </CardTitle>
       </CardHeader>
       <CardContent className="pb-3">
         <div className="space-y-2">
           <div className="text-xs text-muted-foreground">
             {
-              langData?.public.interactiveWorkflowDemo
-                .nodeOneOptionOneDescription.title
+              langData?.public.interactiveWorkflowDemo.nodeCardOneDescription
+                .title
             }
           </div>
           <Badge variant="outline" className="text-xs">
@@ -88,6 +87,8 @@ const ContractUploadNode = ({ data, selected }: NodeProps) => {
 };
 
 const ContractAnalysisNode = ({ data, selected }: NodeProps) => {
+  const { langData } = useLanguageData();
+
   return (
     <Card className={`min-w-[200px] ${selected ? "ring-2 ring-primary" : ""}`}>
       <Handle
@@ -106,13 +107,17 @@ const ContractAnalysisNode = ({ data, selected }: NodeProps) => {
           <div className="w-6 h-6 bg-secondary rounded flex items-center justify-center">
             <Search className="h-3 w-3 text-secondary-foreground" />
           </div>
-          {(data as NodeData).label || "Analyze Contract"}
+          {(data as NodeData).label ||
+            langData?.public.interactiveWorkflowDemo.nodeCardTwoTitle.title}
         </CardTitle>
       </CardHeader>
       <CardContent className="pb-3">
         <div className="space-y-2">
           <div className="text-xs text-muted-foreground">
-            Extract key clauses, terms, and obligations
+            {
+              langData?.public.interactiveWorkflowDemo.nodeCardTwoDescription
+                .title
+            }
           </div>
           <Badge variant="outline" className="text-xs">
             <Zap className="mr-1 h-3 w-3" />
@@ -125,6 +130,8 @@ const ContractAnalysisNode = ({ data, selected }: NodeProps) => {
 };
 
 const TenantRightsNode = ({ data, selected }: NodeProps) => {
+  const { langData } = useLanguageData();
+
   return (
     <Card className={`min-w-[200px] ${selected ? "ring-2 ring-primary" : ""}`}>
       <Handle
@@ -143,13 +150,17 @@ const TenantRightsNode = ({ data, selected }: NodeProps) => {
           <div className="w-6 h-6 bg-accent rounded flex items-center justify-center">
             <Globe className="h-3 w-3 text-accent-foreground" />
           </div>
-          {(data as NodeData).label || "Research Rights"}
+          {(data as NodeData).label ||
+            langData?.public.interactiveWorkflowDemo.nodeCardThreeTitle.title}
         </CardTitle>
       </CardHeader>
       <CardContent className="pb-3">
         <div className="space-y-2">
           <div className="text-xs text-muted-foreground">
-            Research applicable tenant rights and protections
+            {
+              langData?.public.interactiveWorkflowDemo.nodeCardThreeDescription
+                .title
+            }
           </div>
           <Badge variant="outline" className="text-xs">
             <Database className="mr-1 h-3 w-3" />
@@ -162,6 +173,8 @@ const TenantRightsNode = ({ data, selected }: NodeProps) => {
 };
 
 const DisputeClassificationNode = ({ data, selected }: NodeProps) => {
+  const { langData } = useLanguageData();
+
   return (
     <Card className={`min-w-[200px] ${selected ? "ring-2 ring-primary" : ""}`}>
       <Handle
@@ -180,13 +193,17 @@ const DisputeClassificationNode = ({ data, selected }: NodeProps) => {
           <div className="w-6 h-6 bg-muted rounded flex items-center justify-center">
             <CheckCircle className="h-3 w-3 text-muted-foreground" />
           </div>
-          {(data as NodeData).label || "Classify Dispute"}
+          {(data as NodeData).label ||
+            langData?.public.interactiveWorkflowDemo.nodeCardFourTitle.title}
         </CardTitle>
       </CardHeader>
       <CardContent className="pb-3">
         <div className="space-y-2">
           <div className="text-xs text-muted-foreground">
-            Categorize dispute type and severity level
+            {
+              langData?.public.interactiveWorkflowDemo.nodeCardFourDescription
+                .title
+            }
           </div>
           <Badge variant="outline" className="text-xs">
             <Eye className="mr-1 h-3 w-3" />
@@ -199,6 +216,8 @@ const DisputeClassificationNode = ({ data, selected }: NodeProps) => {
 };
 
 const StrategyRecommendationNode = ({ data, selected }: NodeProps) => {
+  const { langData } = useLanguageData();
+
   return (
     <Card className={`min-w-[200px] ${selected ? "ring-2 ring-primary" : ""}`}>
       <Handle
@@ -212,13 +231,17 @@ const StrategyRecommendationNode = ({ data, selected }: NodeProps) => {
           <div className="w-6 h-6 bg-primary rounded flex items-center justify-center">
             <PenTool className="h-3 w-3 text-primary-foreground" />
           </div>
-          {(data as NodeData).label || "Legal Strategy"}
+          {(data as NodeData).label ||
+            langData?.public.interactiveWorkflowDemo.nodeCardFiveTitle.title}
         </CardTitle>
       </CardHeader>
       <CardContent className="pb-3">
         <div className="space-y-2">
           <div className="text-xs text-muted-foreground">
-            Generate recommended legal actions and next steps
+            {
+              langData?.public.interactiveWorkflowDemo.nodeCardFiveDescription
+                .title
+            }
           </div>
           <Badge variant="outline" className="text-xs">
             <FileText className="mr-1 h-3 w-3" />
@@ -244,31 +267,31 @@ const initialNodes: Node[] = [
     id: "1",
     type: "contractUpload",
     position: { x: 100, y: 100 },
-    data: { label: "Upload Rental Contract" },
+    data: { label: "" },
   },
   {
     id: "2",
     type: "contractAnalysis",
     position: { x: 500, y: 100 },
-    data: { label: "Analyze Contract Terms" },
+    data: { label: "" },
   },
   {
     id: "3",
     type: "tenantRights",
     position: { x: 900, y: 300 },
-    data: { label: "Research Tenant Rights" },
+    data: { label: "" },
   },
   {
     id: "4",
     type: "disputeClassification",
     position: { x: 900, y: 100 },
-    data: { label: "Classify Dispute Type" },
+    data: { label: "" },
   },
   {
     id: "5",
     type: "strategyRecommendation",
     position: { x: 900, y: -100 },
-    data: { label: "Legal Strategy" },
+    data: { label: "" },
   },
 ];
 

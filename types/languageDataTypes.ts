@@ -37,6 +37,17 @@ export interface LanguageData {
       nodeThreeTitle: { title: string };
       nodeThreeOptionOneTitle: { title: string };
       nodeThreeOptionOneDescription: { title: string };
+      nodeCardOneTitle: { title: string };
+      nodeCardOneDescription: { title: string };
+      nodeCardTwoTitle: { title: string };
+      nodeCardTwoDescription: { title: string };
+      nodeCardThreeTitle: { title: string };
+      nodeCardThreeDescription: { title: string };
+      nodeCardFourTitle: { title: string };
+      nodeCardFourDescription: { title: string };
+      nodeCardFiveTitle: { title: string };
+      nodeCardFiveDescription: { title: string };
+
     }
   };
 }
