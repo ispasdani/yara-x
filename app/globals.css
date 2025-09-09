@@ -162,7 +162,7 @@
         #fb7185 86%, #a21caf 90%, #6366f1 94%,
         color-mix(in oklch, var(--border) 48%, transparent)
       ) border-box;
-    border: 2px solid transparent; /* lets the conic show as the “border” */
+    border: 1px solid transparent; /* lets the conic show as the “border” */
   }
 
   /* Font family utilities */
