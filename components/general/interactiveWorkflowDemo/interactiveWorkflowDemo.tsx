@@ -491,8 +491,11 @@ const InteractiveWorkflowDemo = () => {
 
             <div className="h-96 overflow-y-auto">
               <div className="space-y-4">
-                {nodeCategories.map((category) => (
-                  <div key={category.name} className="space-y-2 flex-1">
+                {nodeCategories.map((category, index) => (
+                  <div
+                    key={index + 13432 * 231311}
+                    className="space-y-2 flex-1"
+                  >
                     <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
                       {category.name}
                     </h4>
