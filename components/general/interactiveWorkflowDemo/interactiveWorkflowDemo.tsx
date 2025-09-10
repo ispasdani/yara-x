@@ -487,7 +487,9 @@ const InteractiveWorkflowDemo = () => {
       {leftPanelVisible && (
         <div className="absolute left-0 top-0 w-64 h-full bg-background/95 border-r border-border p-4 z-10">
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold mb-2">Node Palette</h3>
+            <h3 className="text-sm font-semibold mb-2">
+              {langData?.public.interactiveWorkflowDemo.nodeTitle.title}
+            </h3>
 
             <div className="h-96 overflow-y-auto">
               <div className="space-y-4">
