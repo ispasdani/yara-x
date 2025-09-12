@@ -47,7 +47,9 @@ export interface LanguageData {
       nodeCardFourDescription: { title: string };
       nodeCardFiveTitle: { title: string };
       nodeCardFiveDescription: { title: string };
-
+    }
+    clientLogos: {
+      clientLogosTitle: { title: string };
     }
   };
 }
