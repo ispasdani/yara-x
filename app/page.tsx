@@ -1,4 +1,5 @@
 // app/page.tsx
+import AIToneDemo from "@/components/general/aiToneDemo";
 import ClientLogos from "@/components/general/clientLogos";
 import CTA from "@/components/general/cta";
 import FAQ from "@/components/general/faq";
@@ -6,6 +7,7 @@ import Features from "@/components/general/features";
 import Footer from "@/components/general/footer";
 import Hero from "@/components/general/hero/hero";
 import Pricing from "@/components/general/pricing";
+import Templates from "@/components/general/templates";
 import WorkflowVideo from "@/components/general/workflowVideo";
 
 export default function Home() {
@@ -28,7 +30,9 @@ export default function Home() {
       <Hero />
       <ClientLogos />
       <Features />
+      <Templates />
       <WorkflowVideo />
+      <AIToneDemo />
       <CTA />
       <Pricing />
       <FAQ />
