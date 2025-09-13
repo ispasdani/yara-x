@@ -51,5 +51,17 @@ export interface LanguageData {
     clientLogos: {
       clientLogosTitle: { title: string };
     }
+    mainFeatures: {
+      mainFeaturesTitle: { title: string };
+      mainFeaturesDescription: { title: string };
+      featureOneTitle: { title: string };
+      featureOneDescription: { title: string };
+      featureTwoTitle: { title: string };
+      featureTwoDescription: { title: string };
+      featureThreeTitle: { title: string };
+      featureThreeDescription: { title: string };
+      featureFourTitle: { title: string };
+      featureFourDescription: { title: string };
+    }
   };
 }

@@ -3,6 +3,7 @@ import hero from "./public/hero";
 import publicNav from "./public/nav";
 import interactiveWorkflowDemo from "./public/interactiveWorkflowDemo";
 import clientLogos from "./public/clientLogos";
+import mainFeatures from "./public/mainFeatures";
 
 const en: Record<string, LanguageData> = {
   en: {
@@ -10,7 +11,8 @@ const en: Record<string, LanguageData> = {
       hero,
       publicNav,
       interactiveWorkflowDemo,
-      clientLogos
+      clientLogos,
+      mainFeatures
     },
   },
 };

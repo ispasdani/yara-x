@@ -3,6 +3,7 @@ import hero from "./public/hero";
 import publicNav from "./public/nav";
 import interactiveWorkflowDemo from "./public/interactiveWorkflowDemo";
 import clientLogos from "./public/clientlogos";
+import mainFeatures from "./public/mainFeatures";
 
 const ro: Record<string, LanguageData> = {
   ro: {
@@ -11,6 +12,7 @@ const ro: Record<string, LanguageData> = {
       publicNav,
       interactiveWorkflowDemo,
       clientLogos,
+      mainFeatures,
     },
   },
 };

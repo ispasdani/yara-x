@@ -2,33 +2,8 @@
 
 import { FileText, MessageSquare, Search, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
-
-const features = [
-  {
-    icon: FileText,
-    title: "Automated Document Review",
-    description:
-      "AI-powered analysis of contracts, legal documents, and case files with intelligent highlighting and risk assessment.",
-  },
-  {
-    icon: MessageSquare,
-    title: "Legal AI Chat",
-    description:
-      "Interactive AI assistant trained on legal databases to provide instant answers and legal research support.",
-  },
-  {
-    icon: Search,
-    title: "Web Research Agent",
-    description:
-      "Comprehensive legal research across multiple databases, case law, and regulatory sources with citations.",
-  },
-  {
-    icon: BookOpen,
-    title: "Contract Template Library",
-    description:
-      "Extensive collection of legal templates with AI-powered customization and clause recommendations.",
-  },
-];
+import { useLanguageData } from "@/hooks/useLanguageData";
+import type { LanguageData } from "@/types/languageDataTypes";
 
 // Animation variants
 const containerVariants = {
@@ -88,9 +63,67 @@ const iconVariants = {
   },
 };
 
+const DEFAULT_MAIN_FEATURES: LanguageData["public"]["mainFeatures"] = {
+  mainFeaturesTitle: { title: "Comprehensive Legal AI Platform" },
+  mainFeaturesDescription: {
+    title:
+      "Our integrated suite of AI tools transforms every aspect of legal work, from document analysis to research and contract management.",
+  },
+  featureOneTitle: { title: "Automated Document Review" },
+  featureOneDescription: {
+    title:
+      "AI-powered analysis of contracts, legal documents, and case files with intelligent highlighting and risk assessment.",
+  },
+  featureTwoTitle: { title: "Legal AI Chat" },
+  featureTwoDescription: {
+    title:
+      "Interactive AI assistant trained on legal databases to provide instant answers and legal research support.",
+  },
+  featureThreeTitle: { title: "Web Research Agent" },
+  featureThreeDescription: {
+    title:
+      "Comprehensive legal research across multiple databases, case law, and regulatory sources with citations.",
+  },
+  featureFourTitle: { title: "Contract Template Library" },
+  featureFourDescription: {
+    title:
+      "Extensive collection of legal templates with AI-powered customization and clause recommendations.",
+  },
+};
+
 const Features = () => {
+  const { langData } = useLanguageData();
+  const t = langData?.public.mainFeatures ?? DEFAULT_MAIN_FEATURES;
+
+  const features = [
+    {
+      icon: FileText,
+      title: t.featureOneTitle.title,
+      description: t.featureOneDescription.title,
+    },
+    {
+      icon: MessageSquare,
+      title: t.featureTwoTitle.title,
+      description: t.featureTwoDescription.title,
+    },
+    {
+      icon: Search,
+      title: t.featureThreeTitle.title,
+      description: t.featureThreeDescription.title,
+    },
+    {
+      icon: BookOpen,
+      title: t.featureFourTitle.title,
+      description: t.featureFourDescription.title,
+    },
+  ];
+
   return (
-    <section id="features" className="py-24 bg-gray-50 w-full">
+    <section
+      id="features"
+      className="py-24 w-full"
+      style={{ backgroundColor: "var(--muted)" }}
+    >
       <div className="container mx-auto px-6 max-w-7xl">
         <motion.div
           className="text-center mb-20 mx-auto"
@@ -100,11 +133,10 @@ const Features = () => {
           variants={headerVariants}
         >
           <h2 className="text-5xl md:text-6xl font-bold leading-tight font-serif text-foreground">
-            Comprehensive Legal AI Platform
+            {t.mainFeaturesTitle.title}
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mt-3">
-            Our integrated suite of AI tools transforms every aspect of legal
-            work, from document analysis to research and contract management.
+            {t.mainFeaturesDescription.title}
           </p>
         </motion.div>
 
@@ -122,10 +154,15 @@ const Features = () => {
               // Pin hover/tap so nothing changes on interaction
               whileHover={{ scale: 1, y: 0 }}
               whileTap={{ scale: 1, y: 0 }}
-              className="bg-white border border-gray-200 rounded-xl p-8 text-center"
+              className="border rounded-xl p-8 text-center"
+              style={{
+                backgroundColor: "var(--card)",
+                borderColor: "var(--border)",
+              }}
             >
               <motion.div
-                className="w-16 h-16 bg-gray-900/5 rounded-2xl flex items-center justify-center mx-auto mb-6"
+                className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6"
+                style={{ backgroundColor: "var(--muted)" }}
                 variants={iconVariants}
               >
                 <feature.icon className="h-8 w-8 text-foreground" />
