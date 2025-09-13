@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguageData } from "@/hooks/useLanguageData";
+import type { LanguageData } from "@/types/languageDataTypes";
 
 const clientLogos = [
   "Baker McKenzie",
@@ -11,23 +12,51 @@ const clientLogos = [
   "Freshfields",
 ];
 
+const DEFAULT_CLIENT_LOGOS: LanguageData["public"]["clientLogos"] = {
+  clientLogosTitle: {
+    title: "Trusted by top law firms, companies, and users worldwide",
+  },
+};
+
 export default function ClientLogos() {
   const { langData } = useLanguageData();
+  const t = langData?.public.clientLogos ?? DEFAULT_CLIENT_LOGOS;
 
   return (
-    <section className="py-16 w-full bg-white border-t border-gray-200">
+    <section
+      className="py-16 w-full border-t"
+      style={{
+        backgroundColor: "var(--background)",
+        borderColor: "var(--border)",
+      }}
+    >
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="text-center mb-12">
-          <p className="text-sm text-gray-500 tracking-wider uppercase font-medium">
-            {langData?.public.clientLogos.clientLogosTitle.title}
+          <p
+            className="text-sm tracking-wider uppercase font-medium"
+            style={{ color: "var(--muted-foreground)" }}
+          >
+            {t.clientLogosTitle.title}
           </p>
         </div>
 
         {/* Marquee wrapper */}
         <div className="relative group overflow-hidden">
           {/* Edge fades */}
-          <div className="pointer-events-none absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-white to-transparent" />
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-white to-transparent" />
+          <div
+            className="pointer-events-none absolute left-0 top-0 h-full w-16 bg-gradient-to-r to-transparent"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, var(--background), transparent)",
+            }}
+          />
+          <div
+            className="pointer-events-none absolute right-0 top-0 h-full w-16 bg-gradient-to-l to-transparent"
+            style={{
+              backgroundImage:
+                "linear-gradient(to left, var(--background), transparent)",
+            }}
+          />
 
           {/* Track: duplicate the items once so the loop is seamless */}
           <div
@@ -36,8 +65,17 @@ export default function ClientLogos() {
           >
             {[...clientLogos, ...clientLogos].map((client, idx) => (
               <div key={idx} className="shrink-0">
-                <div className="h-12 px-5 flex items-center justify-center rounded-xl bg-white">
-                  <span className="text-gray-600 font-medium text-sm tracking-wide whitespace-nowrap hover:text-gray-900 transition-colors">
+                <div
+                  className="h-12 px-5 flex items-center justify-center"
+                  style={{
+                    backgroundColor: "var(--card)",
+                    borderColor: "var(--border)",
+                  }}
+                >
+                  <span
+                    className="font-medium text-sm tracking-wide whitespace-nowrap hover:text-foreground transition-colors"
+                    style={{ color: "var(--muted-foreground)" }}
+                  >
                     {client}
                   </span>
                 </div>

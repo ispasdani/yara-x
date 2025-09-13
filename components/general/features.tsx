@@ -1,4 +1,7 @@
+"use client";
+
 import { FileText, MessageSquare, Search, BookOpen } from "lucide-react";
+import { motion } from "framer-motion";
 
 const features = [
   {
@@ -27,11 +30,75 @@ const features = [
   },
 ];
 
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const headerVariants = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 50,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+    },
+  },
+};
+
+const iconVariants = {
+  hidden: { scale: 0, rotate: -180 },
+  visible: {
+    scale: 1,
+    rotate: 0,
+    transition: {
+      type: "spring" as const,
+      stiffness: 200,
+      damping: 15,
+      delay: 0.2,
+    },
+  },
+};
+
 const Features = () => {
   return (
     <section id="features" className="py-24 bg-gray-50 w-full">
       <div className="container mx-auto px-6 max-w-7xl">
-        <div className="text-center mb-20 mx-auto">
+        <motion.div
+          className="text-center mb-20 mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+          variants={headerVariants}
+        >
           <h2 className="text-5xl md:text-6xl font-bold leading-tight font-serif text-foreground">
             Comprehensive Legal AI Platform
           </h2>
@@ -39,28 +106,53 @@ const Features = () => {
             Our integrated suite of AI tools transforms every aspect of legal
             work, from document analysis to research and contract management.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <motion.div
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
+          variants={containerVariants}
+        >
           {features.map((feature, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-white border border-gray-200 rounded-xl p-8 text-center group transition-all duration-300 ease-in-out hover:shadow-lg hover:shadow-gray-200/50 hover:border-gray-300"
+              variants={cardVariants}
+              // Pin hover/tap so nothing changes on interaction
+              whileHover={{ scale: 1, y: 0 }}
+              whileTap={{ scale: 1, y: 0 }}
+              className="bg-white border border-gray-200 rounded-xl p-8 text-center"
             >
-              <div className="w-16 h-16 bg-gray-900/5 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-900/10 transition-colors duration-200">
+              <motion.div
+                className="w-16 h-16 bg-gray-900/5 rounded-2xl flex items-center justify-center mx-auto mb-6"
+                variants={iconVariants}
+              >
                 <feature.icon className="h-8 w-8 text-foreground" />
-              </div>
+              </motion.div>
 
-              <h3 className="font-serif text-xl font-semibold text-foreground mb-4">
+              <motion.h3
+                className="font-serif text-xl font-semibold text-foreground mb-4"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.4 }}
+                viewport={{ once: false }}
+              >
                 {feature.title}
-              </h3>
+              </motion.h3>
 
-              <p className="text-base text-muted-foreground leading-relaxed">
+              <motion.p
+                className="text-base text-muted-foreground leading-relaxed"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+                viewport={{ once: false }}
+              >
                 {feature.description}
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
