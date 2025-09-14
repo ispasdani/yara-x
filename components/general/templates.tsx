@@ -780,7 +780,7 @@ const TemplatesGrid = () => {
   return (
     <section id="templates" className="py-24 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="heading-section mb-6">Legal Document Templates</h2>
           <p className="text-lead max-w-2xl mx-auto mb-8">
             Professional legal templates covering every business need. Click any
