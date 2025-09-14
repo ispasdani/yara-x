@@ -3,9 +3,6 @@
 import { useState } from "react";
 import {
   Search,
-  ChevronDown,
-  ChevronRight,
-  ChevronUp,
   FileText,
   Shield,
   Mail,
@@ -41,10 +38,20 @@ import {
   MapPin,
   Laptop,
   Shield as ShieldIcon,
+  X,
+  ChevronDown,
+  ChevronUp,
+  LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const templateCategories = {
   "Sales Documents and Forms": {
@@ -675,22 +682,81 @@ const templateCategories = {
   },
 };
 
-const Templates = () => {
-  const [searchOpen, setSearchOpen] = useState(false);
+const TemplatesGrid = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
-    new Set()
-  );
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showSearchResults, setShowSearchResults] = useState(false);
   const [showAllCategories, setShowAllCategories] = useState(false);
+  const [showAllSearchResults, setShowAllSearchResults] = useState(false);
 
-  const toggleCategory = (categoryName: string) => {
-    const newExpanded = new Set(expandedCategories);
-    if (newExpanded.has(categoryName)) {
-      newExpanded.delete(categoryName);
-    } else {
-      newExpanded.add(categoryName);
-    }
-    setExpandedCategories(newExpanded);
+  const INITIAL_CATEGORIES_COUNT = 12;
+  const INITIAL_SEARCH_COUNT = 40;
+
+  const getSearchResults = () => {
+    if (!searchTerm.trim()) return [];
+
+    const results: Array<{
+      category: string;
+      template: string;
+      icon: LucideIcon;
+    }> = [];
+
+    Object.entries(templateCategories).forEach(
+      ([categoryName, categoryData]) => {
+        categoryData.templates.forEach((template) => {
+          if (
+            template.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            categoryName.toLowerCase().includes(searchTerm.toLowerCase())
+          ) {
+            results.push({
+              category: categoryName,
+              template,
+              icon: categoryData.icon,
+            });
+          }
+        });
+      }
+    );
+
+    return results;
+  };
+
+  const getFilteredCategories = () => {
+    if (searchTerm.trim()) return [];
+    return Object.entries(templateCategories);
+  };
+
+  const searchResults = getSearchResults();
+  const categories = getFilteredCategories();
+
+  // Show more/less calculations
+  const displayedSearchResults = searchTerm.trim()
+    ? showAllSearchResults
+      ? searchResults
+      : searchResults.slice(0, INITIAL_SEARCH_COUNT)
+    : [];
+  const displayedCategories = !searchTerm.trim()
+    ? showAllCategories
+      ? categories
+      : categories.slice(0, INITIAL_CATEGORIES_COUNT)
+    : [];
+
+  const handleCategoryClick = (categoryName: string) => {
+    setSelectedCategory(categoryName);
+    setIsDialogOpen(true);
+  };
+
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+    setShowSearchResults(!!value.trim());
+    setShowAllSearchResults(false);
+  };
+
+  const clearSearch = () => {
+    setSearchTerm("");
+    setShowSearchResults(false);
+    setShowAllSearchResults(false);
   };
 
   const highlightText = (text: string, highlight: string) => {
@@ -711,197 +777,98 @@ const Templates = () => {
     );
   };
 
-  const getFilteredResults = () => {
-    if (!searchTerm.trim()) return null;
-
-    const results: Array<{ category: string; template: string }> = [];
-
-    Object.entries(templateCategories).forEach(
-      ([categoryName, categoryData]) => {
-        categoryData.templates.forEach((template) => {
-          if (
-            template.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            categoryName.toLowerCase().includes(searchTerm.toLowerCase())
-          ) {
-            results.push({ category: categoryName, template });
-          }
-        });
-      }
-    );
-
-    return results;
-  };
-
-  const filteredResults = getFilteredResults();
-
   return (
     <section id="templates" className="py-24 bg-background">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-20">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
           <h2 className="heading-section mb-6">Legal Document Templates</h2>
-          <p className="text-lead max-w-3xl mx-auto mb-8">
-            Access our comprehensive library of legal document templates,
-            organized by category for easy navigation and quick implementation.
+          <p className="text-lead max-w-2xl mx-auto mb-8">
+            Professional legal templates covering every business need. Click any
+            category to explore available templates.
           </p>
 
-          {/* Search Section */}
-          <div className="max-w-md mx-auto">
-            {!searchOpen ? (
-              <Button
-                variant="outline"
-                onClick={() => setSearchOpen(true)}
-                className="w-full h-12 bg-surface hover:bg-surface-hover border-border text-muted-foreground"
+          {/* Search */}
+          <div className="max-w-md mx-auto relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+            <Input
+              type="text"
+              placeholder="Search templates..."
+              value={searchTerm}
+              onChange={(e) => handleSearch(e.target.value)}
+              className="pl-12 pr-12 py-3 text-base border-2 focus:border-primary"
+            />
+            {searchTerm && (
+              <button
+                onClick={clearSearch}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
               >
-                <Search className="h-4 w-4 mr-2" />
-                Search templates...
-              </Button>
-            ) : (
-              <div className="relative">
-                <Input
-                  type="text"
-                  placeholder="Search templates..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-12 pl-10 pr-10 bg-surface border-border"
-                  autoFocus
-                />
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setSearchOpen(false);
-                    setSearchTerm("");
-                  }}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
-                >
-                  ×
-                </Button>
-              </div>
+                <X className="h-5 w-5" />
+              </button>
             )}
           </div>
         </div>
 
         {/* Search Results */}
-        {filteredResults && filteredResults.length > 0 && (
-          <div className="mb-12">
-            <h3 className="text-xl font-semibold text-foreground mb-6 text-center">
-              Search Results ({filteredResults.length})
-            </h3>
-            <div className="max-w-4xl mx-auto grid gap-4">
-              {filteredResults.map((result, index) => (
-                <Card
-                  key={index}
-                  className="p-4 hover:shadow-card transition-shadow"
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-medium text-foreground mb-1">
-                        {highlightText(result.template, searchTerm)}
+        {showSearchResults && searchTerm && (
+          <div className="mb-8">
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-2">
+                Search Results for "{searchTerm}"
+              </h3>
+              <p className="text-muted-foreground">
+                Found {searchResults.length} templates matching your search
+              </p>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-4">
+              {displayedSearchResults.map((result, index) => {
+                const IconComponent = result.icon;
+                return (
+                  <Card
+                    key={`${result.category}-${result.template}-${index}`}
+                    className="p-4 hover:bg-muted/50 transition-colors duration-200 group"
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-200">
+                        <IconComponent className="h-5 w-5 text-primary" />
                       </div>
-                      <div className="text-sm text-muted-foreground">
-                        in {highlightText(result.category, searchTerm)}
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-foreground text-sm leading-tight mb-1">
+                          {highlightText(result.template, searchTerm)}
+                        </h4>
+                        <p className="text-xs text-muted-foreground mb-3">
+                          {highlightText(result.category, searchTerm)}
+                        </p>
+                        <Button
+                          size="sm"
+                          className="w-full bg-primary text-primary-foreground hover:bg-primary-hover text-xs"
+                        >
+                          Use Template
+                        </Button>
                       </div>
                     </div>
-                    <Button variant="outline" size="sm">
-                      Use Template
-                    </Button>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Categories */}
-        {(!searchTerm.trim() || filteredResults?.length === 0) && (
-          <div className="max-w-6xl mx-auto relative">
-            <div className="columns-1 md:columns-2 gap-x-6">
-              {Object.entries(templateCategories)
-                .slice(0, showAllCategories ? undefined : 12)
-                .map(([categoryName, categoryData]) => {
-                  const isExpanded = expandedCategories.has(categoryName);
-                  const IconComponent = categoryData.icon;
-
-                  return (
-                    <Card
-                      key={categoryName}
-                      className="overflow-hidden mb-4 break-inside-avoid"
-                    >
-                      <button
-                        onClick={() => toggleCategory(categoryName)}
-                        className="w-full p-3 text-left hover:bg-surface transition-colors group"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-primary/5 rounded-lg flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                              <IconComponent className="h-4 w-4 text-primary" />
-                            </div>
-                            <div>
-                              <h3 className="font-serif text-lg font-semibold text-foreground">
-                                {categoryName}
-                              </h3>
-                              <p className="text-xs text-muted-foreground">
-                                {categoryData.templates.length} templates
-                                available
-                              </p>
-                            </div>
-                          </div>
-                          {isExpanded ? (
-                            <ChevronDown className="h-5 w-5 text-muted-foreground" />
-                          ) : (
-                            <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                          )}
-                        </div>
-                      </button>
-
-                      {isExpanded && (
-                        <div className="border-t border-border bg-surface/50 animate-accordion-down">
-                          <div className="p-6 grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-                            {categoryData.templates.map((template, index) => (
-                              <div
-                                key={index}
-                                className="flex items-center justify-between p-3 bg-card rounded-lg border border-card-border hover:shadow-sm transition-shadow group"
-                              >
-                                <span className="text-sm text-foreground font-medium flex-1 pr-3">
-                                  {template}
-                                </span>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  className="opacity-0 group-hover:opacity-100 transition-opacity text-xs px-3 py-1 h-auto"
-                                >
-                                  Use
-                                </Button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </Card>
-                  );
-                })}
+                  </Card>
+                );
+              })}
             </div>
 
-            {/* Show More/Less Button */}
-            {Object.entries(templateCategories).length > 12 && (
+            {/* Show More/Less for Search Results */}
+            {searchResults.length > INITIAL_SEARCH_COUNT && (
               <div className="flex justify-center mt-8">
                 <Button
                   variant="outline"
-                  onClick={() => setShowAllCategories(!showAllCategories)}
-                  className="px-8 py-3 h-auto bg-surface hover:bg-surface-hover border-border hover-scale"
+                  onClick={() => setShowAllSearchResults(!showAllSearchResults)}
+                  className="flex items-center gap-2"
                 >
-                  {showAllCategories ? (
+                  {showAllSearchResults ? (
                     <>
+                      <ChevronUp className="h-4 w-4" />
                       Show Less
-                      <ChevronUp className="ml-2 h-4 w-4" />
                     </>
                   ) : (
                     <>
-                      Show More (
-                      {Object.entries(templateCategories).length - 12} more
-                      categories)
-                      <ChevronDown className="ml-2 h-4 w-4" />
+                      <ChevronDown className="h-4 w-4" />
+                      Show {searchResults.length - INITIAL_SEARCH_COUNT} More
                     </>
                   )}
                 </Button>
@@ -910,22 +877,127 @@ const Templates = () => {
           </div>
         )}
 
-        {searchTerm.trim() && filteredResults?.length === 0 && (
-          <div className="text-center py-12">
-            <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search className="h-6 w-6 text-muted-foreground" />
+        {/* Categories Grid */}
+        {!showSearchResults && (
+          <>
+            <div className="flex flex-wrap justify-center gap-4">
+              {displayedCategories.map(([categoryName, categoryData]) => {
+                const IconComponent = categoryData.icon;
+                return (
+                  <Card
+                    key={categoryName}
+                    className="p-4 cursor-pointer feature-card group"
+                    onClick={() => handleCategoryClick(categoryName)}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-200">
+                        <IconComponent className="h-6 w-6 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-foreground text-lg leading-tight mb-2 group-hover:text-primary transition-colors duration-200">
+                          {categoryName}
+                        </h3>
+                        <p className="text-muted-foreground text-sm">
+                          {categoryData.templates.length} templates available
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
             </div>
-            <h3 className="text-lg font-semibold text-foreground mb-2">
-              No templates found
-            </h3>
-            <p className="text-muted-foreground">
-              Try adjusting your search terms or browse by category above.
+
+            {/* Show More/Less for Categories */}
+            {categories.length > INITIAL_CATEGORIES_COUNT && (
+              <div className="flex justify-center mt-12">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowAllCategories(!showAllCategories)}
+                  className="flex items-center gap-2"
+                >
+                  {showAllCategories ? (
+                    <>
+                      <ChevronUp className="h-4 w-4" />
+                      Show Less
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-4 w-4" />
+                      Show {categories.length - INITIAL_CATEGORIES_COUNT} More
+                      Categories
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* No Results */}
+        {showSearchResults && searchResults.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground text-lg">
+              No templates found matching "{searchTerm}"
             </p>
           </div>
         )}
+
+        {/* Template Dialog */}
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent className="w-full max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-semibold text-foreground flex items-center space-x-3">
+                {selectedCategory && (
+                  <>
+                    {(() => {
+                      const IconComponent =
+                        templateCategories[
+                          selectedCategory as keyof typeof templateCategories
+                        ]?.icon;
+                      return IconComponent ? (
+                        <IconComponent className="h-6 w-6 text-primary" />
+                      ) : null;
+                    })()}
+                    <span>{selectedCategory}</span>
+                  </>
+                )}
+              </DialogTitle>
+            </DialogHeader>
+
+            {selectedCategory && (
+              <div className="mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {templateCategories[
+                    selectedCategory as keyof typeof templateCategories
+                  ]?.templates.map((template, index) => (
+                    <div
+                      key={index}
+                      className="p-4 border border-border rounded-lg bg-card hover:bg-muted/50 transition-colors duration-200 group"
+                    >
+                      <div className="flex items-center justify-between space-x-3">
+                        <div className="flex items-center space-x-3 flex-1 min-w-0">
+                          <FileText className="h-5 w-5 text-primary flex-shrink-0" />
+                          <span className="text-foreground group-hover:text-primary transition-colors duration-200 text-sm">
+                            {template}
+                          </span>
+                        </div>
+                        <Button
+                          size="sm"
+                          className="cursor-pointer bg-primary text-primary-foreground hover:bg-primary-hover text-xs px-3 py-1 flex-shrink-0"
+                        >
+                          Use
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );
 };
 
-export default Templates;
+export default TemplatesGrid;
