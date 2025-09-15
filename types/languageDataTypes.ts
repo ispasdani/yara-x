@@ -8,7 +8,7 @@ export interface LanguageData {
       chatGuidelines: { title: string };
       primaryButtonText: { title: string };
       secondaryButtonText: { title: string };
-    }
+    };
     publicNav: {
       aboutUs: { title: string; href: string };
       pricing: { title: string; href: string };
@@ -47,10 +47,10 @@ export interface LanguageData {
       nodeCardFourDescription: { title: string };
       nodeCardFiveTitle: { title: string };
       nodeCardFiveDescription: { title: string };
-    }
+    };
     clientLogos: {
       clientLogosTitle: { title: string };
-    }
+    };
     mainFeatures: {
       mainFeaturesTitle: { title: string };
       mainFeaturesDescription: { title: string };
@@ -62,6 +62,17 @@ export interface LanguageData {
       featureThreeDescription: { title: string };
       featureFourTitle: { title: string };
       featureFourDescription: { title: string };
-    }
+    };
+    templates: {
+      templatesTitle: { title: string };
+      templatesDescription: { title: string };
+      categories: {
+        [key: string]: {
+          title: string;
+          iconKey?: string;
+          templates: { title: string }[];
+        };
+      };
+    };
   };
 }

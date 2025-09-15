@@ -4,6 +4,7 @@ import publicNav from "./public/nav";
 import interactiveWorkflowDemo from "./public/interactiveWorkflowDemo";
 import clientLogos from "./public/clientlogos";
 import mainFeatures from "./public/mainFeatures";
+import templates from "./public/templates";
 
 const ro: Record<string, LanguageData> = {
   ro: {
@@ -13,6 +14,7 @@ const ro: Record<string, LanguageData> = {
       interactiveWorkflowDemo,
       clientLogos,
       mainFeatures,
+      templates,
     },
   },
 };
