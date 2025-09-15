@@ -7,6 +7,23 @@ const templates: LanguageData["public"]["templates"] = {
     title:
       "Răsfoiește și generează șabloane profesionale în diverse categorii.",
   },
+  searchResultTitle: { title: "Rezultatele căutării pentru" },
+  searchResultDescriptionFirstWord: { title: "Găsite" },
+  searchResultDescriptionRestOfText: {
+    title: "șabloane care se potrivesc cu căutarea ta",
+  },
+  actionBtnUseTemplate: { title: "Folosește șablonul" },
+  templatesAvailableMsg: { title: "" },
+  showLessBtn: { title: "Afișează mai puțin" },
+  showMoreFirstBtn: { title: "Afișează" },
+  showMoreLastBtn: { title: "mai mult" },
+  moreCategoriesFirstBtn: { title: "Afișează" },
+  moreCategoriesLastBtn: { title: "mai multe categorii" },
+  noSearchResultsTitle: {
+    title: "Nu au fost găsite șabloane care să corespundă cu",
+  },
+  useTemplateBtn: { title: "Folosește" },
+
   categories: {
     "Sales Documents and Forms": {
       title: "Documente și formulare de vânzări",

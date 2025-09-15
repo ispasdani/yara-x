@@ -66,6 +66,18 @@ export interface LanguageData {
     templates: {
       templatesTitle: { title: string };
       templatesDescription: { title: string };
+      searchResultTitle: { title: string };
+      searchResultDescriptionFirstWord: { title: string };
+      searchResultDescriptionRestOfText: { title: string };
+      actionBtnUseTemplate: { title: string };
+      templatesAvailableMsg: { title: string };
+      showLessBtn: { title: string };
+      showMoreFirstBtn: { title: string };
+      showMoreLastBtn: { title: string };
+      moreCategoriesFirstBtn: { title: string };
+      moreCategoriesLastBtn: { title: string };
+      noSearchResultsTitle: { title: string };
+      useTemplateBtn: { title: string };
       categories: {
         [key: string]: {
           title: string;

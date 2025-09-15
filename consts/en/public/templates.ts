@@ -6,6 +6,20 @@ const templates: LanguageData["public"]["templates"] = {
   templatesDescription: {
     title: "Browse and generate professional templates across categories.",
   },
+  searchResultTitle: { title: "Search Results for" },
+  searchResultDescriptionFirstWord: { title: "Found" },
+  searchResultDescriptionRestOfText: {
+    title: "templates matching your search",
+  },
+  actionBtnUseTemplate: { title: "Use Template" },
+  templatesAvailableMsg: { title: "" },
+  showLessBtn: { title: "Show Less" },
+  showMoreFirstBtn: { title: "Show" },
+  showMoreLastBtn: { title: "More" },
+  moreCategoriesFirstBtn: { title: "Show" },
+  moreCategoriesLastBtn: { title: "More Categories" },
+  noSearchResultsTitle: { title: "No templates found matching" },
+  useTemplateBtn: { title: "Use" },
   categories: {
     "Sales Documents and Forms": {
       title: "Sales Documents and Forms",
