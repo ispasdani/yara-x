@@ -228,11 +228,11 @@ const TemplatesGrid = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-10">
-          <h2 className="heading-section mb-6">
+          <h2 className="text-5xl md:text-6xl font-bold leading-tight font-serif text-foreground">
             {t?.templatesTitle.title ??
               DEFAULT_TEMPLATES_HEADER.templatesTitle.title}
           </h2>
-          <p className="text-lead max-w-2xl mx-auto mb-8">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mt-3 mb-14">
             {t?.templatesDescription.title ??
               DEFAULT_TEMPLATES_HEADER.templatesDescription.title}
           </p>
