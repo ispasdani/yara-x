@@ -8,6 +8,7 @@ import Features from "@/components/general/features";
 import Footer from "@/components/general/footer";
 import Hero from "@/components/general/hero/hero";
 import Pricing from "@/components/general/pricing";
+import TextEditorPreview from "@/components/general/richTextEditorPreview";
 import Templates from "@/components/general/templates";
 import WorkflowVideo from "@/components/general/workflowVideo";
 
@@ -32,6 +33,7 @@ export default function Home() {
       <ClientLogos />
       <Features />
       <Templates />
+      <TextEditorPreview />
       <WorkflowVideo />
       <AIToneDemo />
       <CTA />
