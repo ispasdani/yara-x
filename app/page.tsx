@@ -1,5 +1,6 @@
 // app/page.tsx
 import AIToneDemo from "@/components/general/aiToneDemo";
+import Ambassador from "@/components/general/ambassador";
 import ClientLogos from "@/components/general/clientLogos";
 import CTA from "@/components/general/cta";
 import FAQ from "@/components/general/faq";
@@ -36,6 +37,7 @@ export default function Home() {
       <CTA />
       <Pricing />
       <FAQ />
+      <Ambassador />
       <Footer />
     </main>
   );
