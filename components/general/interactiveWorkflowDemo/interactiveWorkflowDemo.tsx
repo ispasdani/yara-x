@@ -482,7 +482,7 @@ const InteractiveWorkflowDemo = () => {
   ];
 
   return (
-    <div className="relative bg-gradient-to-br from-surface to-background rounded-2xl border border-border shadow-lg overflow-hidden h-[700px]">
+    <div className="relative bg-gradient-to-br from-surface to-background rounded-2xl border border-border shadow-lg overflow-hidden h-[650px]">
       {/* Left Panel - Node Palette */}
       {leftPanelVisible && (
         <div className="absolute left-0 top-0 w-64 h-full bg-background/95 border-r border-border p-4 z-10">
