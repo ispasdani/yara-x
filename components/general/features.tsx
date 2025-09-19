@@ -132,7 +132,7 @@ const Features = () => {
           viewport={{ once: false, amount: 0.3 }}
           variants={headerVariants}
         >
-          <h2 className="text-5xl md:text-6xl font-bold leading-tight font-serif text-foreground">
+          <h2 className="text-5xl font-bold text-gray-900 mb-6 font-serif">
             {t.mainFeaturesTitle.title}
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mt-3">

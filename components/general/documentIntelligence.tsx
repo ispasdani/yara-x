@@ -10,6 +10,7 @@ import {
   Database,
   Zap,
 } from "lucide-react";
+import { Button } from "../ui/button";
 
 const intelligenceFeatures = [
   {
@@ -77,20 +78,29 @@ const DocumentIntelligenceDemo = () => {
           {/* Content Section - Left */}
           <div>
             <div className="mb-12">
-              <h2 className="heading-section mb-6">
-                Document Intelligence & AI Q&A
+              <h2 className="text-5xl font-bold text-gray-900 mb-6 font-serif">
+                Document Intelligence{" "}
+                <span className="font-sans text-2xl"> & </span>
+                AI Q<span className="font-sans text-2xl">&</span>A
               </h2>
-              <p className="text-lead mb-8">
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mt-3 mb-6">
                 Upload any legal document and instantly transform it into an
                 intelligent, searchable knowledge base. Ask questions and get
                 precise answers based on your content.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="btn-hero">Try Document Intelligence</button>
-                <button className="inline-flex items-center justify-center px-8 py-4 text-base font-medium bg-surface text-foreground rounded-lg border border-card-border hover:bg-surface-hover transition-colors">
+                <Button className="inline-flex items-center justify-center p-5 text-base font-medium rounded-lg cursor-pointer">
+                  Try Document Intelligence
+                </Button>
+
+                <Button
+                  variant="outline"
+                  className="hover:text-foreground cursor-pointer p-5"
+                  style={{ color: "var(--muted-foreground)" }}
+                >
                   View Demo
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -104,7 +114,9 @@ const DocumentIntelligenceDemo = () => {
                     <h4 className="font-serif text-lg font-semibold text-foreground mb-2">
                       {feature.title}
                     </h4>
-                    <p className="text-body text-sm">{feature.description}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {feature.description}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -153,7 +165,7 @@ const DocumentIntelligenceDemo = () => {
                     <button
                       key={index}
                       onClick={() => handleQuestionClick(index)}
-                      className={`w-full text-left p-3 rounded-lg border transition-all text-sm ${
+                      className={`w-full text-left p-3 rounded-lg border transition-all text-sm cursor-pointer ${
                         activeQuestion === index
                           ? "border-primary bg-primary/5 text-primary"
                           : "border-card-border bg-surface hover:border-primary/30 text-foreground"
@@ -213,13 +225,13 @@ const DocumentIntelligenceDemo = () => {
                       Processing
                     </div>
                   </div>
-                  <div className="text-center p-3 bg-primary/5 rounded-lg">
+                  <div className="text-center p-3 bg-primary/5 rounded-lg flex flex-col items-center justify-center">
                     <div className="text-lg font-bold text-primary">99%</div>
                     <div className="text-xs text-muted-foreground">
                       Accuracy
                     </div>
                   </div>
-                  <div className="text-center p-3 bg-primary/5 rounded-lg">
+                  <div className="text-center p-3 bg-primary/5 rounded-lg flex flex-col items-center justify-center">
                     <div className="text-lg font-bold text-primary">50+</div>
                     <div className="text-xs text-muted-foreground">
                       File Types

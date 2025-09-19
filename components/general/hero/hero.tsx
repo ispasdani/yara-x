@@ -60,7 +60,7 @@ export default function Hero() {
               {t.floatingMessage.title}
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight font-serif text-foreground">
+            <h1 className="text-5xl font-bold leading-tight font-serif text-foreground">
               {t.title.title}
             </h1>
 
@@ -73,19 +73,13 @@ export default function Hero() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                className="inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-lg"
-                style={{
-                  backgroundColor: "var(--primary)",
-                  color: "var(--primary-foreground)",
-                }}
-              >
+              <Button className="inline-flex items-center justify-center p-5 text-base font-medium rounded-lg cursor-pointer">
                 {t.primaryButtonText.title}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
-                variant="ghost"
-                className="hover:text-foreground"
+                variant="outline"
+                className="hover:text-foreground cursor-pointer p-5"
                 style={{ color: "var(--muted-foreground)" }}
               >
                 {t.secondaryButtonText.title}

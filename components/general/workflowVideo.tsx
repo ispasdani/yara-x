@@ -68,7 +68,7 @@ const WorkflowVideo = () => {
           {/* Content Section */}
           <div>
             <div className="mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-serif">
+              <h2 className="text-5xl font-bold text-gray-900 mb-6 font-serif">
                 Create Custom Legal Workflows with AI
               </h2>
               <p className="text-lead mb-8">

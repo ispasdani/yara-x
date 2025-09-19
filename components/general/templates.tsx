@@ -228,7 +228,7 @@ const TemplatesGrid = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-10">
-          <h2 className="text-5xl md:text-6xl font-bold leading-tight font-serif text-foreground">
+          <h2 className="text-5xl font-bold leading-tight font-serif text-foreground">
             {t?.templatesTitle.title ??
               DEFAULT_TEMPLATES_HEADER.templatesTitle.title}
           </h2>
