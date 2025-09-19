@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -118,11 +119,47 @@ const DEFAULT_TEXT_EDITOR: LanguageData["public"]["textEditor"] = {
   },
 };
 
+// Animation variants
+const fadeInUp = {
+  initial: { opacity: 0, y: 60 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+};
+
+const staggerContainer = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const scaleIn = {
+  initial: { scale: 0.8, opacity: 0 },
+  animate: { scale: 1, opacity: 1 },
+  transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+};
+
+const slideInFromLeft = {
+  initial: { x: -50, opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+};
+
+const slideInFromRight = {
+  initial: { x: 50, opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+};
+
 const TextEditorPreview = () => {
   const { langData } = useLanguageData();
   const t = langData?.public.textEditor ?? DEFAULT_TEXT_EDITOR;
   const router = useRouter();
   const [selectedDemo, setSelectedDemo] = useState("editing");
+  const [isTyping, setIsTyping] = useState(false);
 
   const handleTryEditor = () => {
     router.push(
@@ -130,473 +167,761 @@ const TextEditorPreview = () => {
     );
   };
 
+  const handleTabChange = (tab: string) => {
+    setSelectedDemo(tab);
+    if (tab === "ai") {
+      setTimeout(() => setIsTyping(true), 1000);
+      setTimeout(() => setIsTyping(false), 3000);
+    }
+  };
+
   return (
-    <section className="py-20 bg-gradient-to-br from-background via-muted/30 to-background">
+    <section className="py-20 bg-gradient-to-br from-background via-muted/30 to-background overflow-hidden">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-16">
-          <Badge variant="secondary" className="mb-4">
-            <Sparkles className="h-4 w-4 mr-2" />
-            {t.badge.title}
-          </Badge>
-          <h2 className="text-4xl font-bold mb-6">{t.title.title}</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+        <motion.div
+          className="text-center mb-16"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: false, amount: 0.3 }}
+          variants={staggerContainer}
+        >
+          <motion.div variants={fadeInUp}>
+            <Badge variant="secondary" className="mb-4">
+              <motion.div
+                animate={{ rotate: [0, 5, -5, 0] }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              >
+                <Sparkles className="h-4 w-4 mr-2" />
+              </motion.div>
+              {t.badge.title}
+            </Badge>
+          </motion.div>
+
+          <motion.h2 className="text-4xl font-bold mb-6" variants={fadeInUp}>
+            {t.title.title}
+          </motion.h2>
+
+          <motion.p
+            className="text-xl text-muted-foreground max-w-3xl mx-auto"
+            variants={fadeInUp}
+          >
             {t.description.title}
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Demo Tabs */}
-        <div className="flex justify-center mb-8">
+        <motion.div
+          className="flex justify-center mb-8"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: false, amount: 0.3 }}
+          variants={fadeInUp}
+        >
           <div className="flex bg-muted/50 rounded-lg p-1">
-            <Button
-              variant={selectedDemo === "editing" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setSelectedDemo("editing")}
-              className="mx-1"
-            >
-              {t.demoTabs.editing.title}
-            </Button>
-            <Button
-              variant={selectedDemo === "ai" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setSelectedDemo("ai")}
-              className="mx-1"
-            >
-              {t.demoTabs.ai.title}
-            </Button>
-            <Button
-              variant={selectedDemo === "formatting" ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setSelectedDemo("formatting")}
-              className="mx-1"
-            >
-              {t.demoTabs.formatting.title}
-            </Button>
+            {["editing", "ai", "formatting"].map((tab) => (
+              <motion.div
+                key={tab}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  variant={selectedDemo === tab ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => handleTabChange(tab)}
+                  className="mx-1 relative"
+                >
+                  {selectedDemo === tab && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute inset-0 bg-primary rounded-md"
+                      initial={false}
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                  <span className="relative z-10">
+                    {t.demoTabs[tab as keyof typeof t.demoTabs].title}
+                  </span>
+                </Button>
+              </motion.div>
+            ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Demo Content */}
-        <div className="max-w-6xl mx-auto">
-          <Card className="p-8 bg-background/80 backdrop-blur-sm">
-            {selectedDemo === "editing" && (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      <FileText className="h-5 w-5 text-muted-foreground" />
-                      <h3 className="text-lg font-semibold">
-                        {t.editing.documentTitle.title}
-                      </h3>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
-                      <Copy className="h-4 w-4 mr-2" />
-                      {t.editing.copyButton.title}
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      <MessageSquare className="h-4 w-4 mr-2" />
-                      {t.editing.aiChatButton.title}
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="border rounded-lg p-6 bg-muted/20 min-h-[300px]">
-                  <div className="space-y-4 text-sm">
-                    <h4 className="font-semibold text-lg">
-                      {t.editing.sectionTitle.title}
-                    </h4>
-                    <p>
-                      {t.editing.contractText.title.split("[DD MMM YYYY]")[0]}
-                      <span className="bg-primary/10 border-2 border-primary/30 rounded px-2 py-1">
-                        [DD MMM YYYY]
-                      </span>
-                      {t.editing.contractText.title.split("[DD MMM YYYY]")[1]}
-                    </p>
-                    <p>
-                      <strong>Seller:</strong>{" "}
-                      <span className="bg-yellow-100 dark:bg-yellow-900/30">
-                        {"{{Seller Legal Name}}"}
-                      </span>
-                      , a company organized under the laws of{" "}
-                      {"{{Seller Jurisdiction}}"}, with registered address at{" "}
-                      {"{{Seller Address}}"} (&quot;Seller&quot;).
-                    </p>
-                    <p className="text-muted-foreground italic">
-                      {t.editing.helpText.title}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {selectedDemo === "ai" && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Editor Side */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
-                    <FileText className="h-5 w-5" />
-                    {t.ai.editorTitle.title}
-                  </h3>
-                  <div className="border rounded-lg p-4 bg-muted/20 min-h-[200px]">
-                    <p className="text-sm">
-                      <span className="bg-primary/20 border border-primary/40 rounded px-1">
-                        This Sales Contract establishes the terms
-                      </span>{" "}
-                      for the sale of goods between the parties...
-                    </p>
-                    <div className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Sparkles className="h-4 w-4 text-primary" />
-                        <span className="text-sm font-medium">
-                          {t.ai.selectedText.title}
-                        </span>
+        <motion.div
+          className="max-w-6xl mx-auto"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: false, amount: 0.2 }}
+          variants={scaleIn}
+        >
+          <Card className="p-8 bg-background/80 backdrop-blur-sm overflow-hidden">
+            <AnimatePresence mode="wait">
+              {selectedDemo === "editing" && (
+                <motion.div
+                  key="editing"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="space-y-6"
+                >
+                  <motion.div
+                    className="flex items-center justify-between"
+                    variants={staggerContainer}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: false, amount: 0.3 }}
+                  >
+                    <motion.div
+                      className="flex items-center gap-4"
+                      variants={slideInFromLeft}
+                    >
+                      <div className="flex items-center gap-2">
+                        <motion.div
+                          animate={{ scale: [1, 1.1, 1] }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            repeatDelay: 5,
+                          }}
+                        >
+                          <FileText className="h-5 w-5 text-muted-foreground" />
+                        </motion.div>
+                        <h3 className="text-lg font-semibold">
+                          {t.editing.documentTitle.title}
+                        </h3>
                       </div>
-                      <div className="flex flex-wrap gap-2">
-                        <Badge
-                          variant="outline"
-                          className="text-xs cursor-pointer hover:bg-primary/10"
-                        >
-                          {t.ai.makeFormalBadge.title}
-                        </Badge>
-                        <Badge
-                          variant="outline"
-                          className="text-xs cursor-pointer hover:bg-primary/10"
-                        >
-                          {t.ai.expandBadge.title}
-                        </Badge>
-                        <Badge
-                          variant="outline"
-                          className="text-xs cursor-pointer hover:bg-primary/10"
-                        >
-                          {t.ai.fixGrammarBadge.title}
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                    </motion.div>
+                    <motion.div
+                      className="flex gap-2"
+                      variants={slideInFromRight}
+                    >
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button variant="outline" size="sm">
+                          <Copy className="h-4 w-4 mr-2" />
+                          {t.editing.copyButton.title}
+                        </Button>
+                      </motion.div>
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button variant="outline" size="sm">
+                          <MessageSquare className="h-4 w-4 mr-2" />
+                          {t.editing.aiChatButton.title}
+                        </Button>
+                      </motion.div>
+                    </motion.div>
+                  </motion.div>
 
-                {/* AI Chat Side */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
-                    <MessageSquare className="h-5 w-5" />
-                    {t.ai.assistantTitle.title}
-                  </h3>
-                  <div className="border rounded-lg p-4 bg-muted/20 h-[200px] flex flex-col">
-                    <div className="flex-1 space-y-3 text-sm">
-                      <div className="flex justify-end">
-                        <div className="bg-primary text-primary-foreground p-2 rounded-lg max-w-[80%]">
-                          {t.ai.userMessage.title}
+                  <motion.div
+                    className="border rounded-lg p-6 bg-muted/20 min-h-[300px]"
+                    variants={fadeInUp}
+                  >
+                    <div className="space-y-4 text-sm">
+                      <motion.h4
+                        className="font-semibold text-lg"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        {t.editing.sectionTitle.title}
+                      </motion.h4>
+
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                      >
+                        {t.editing.contractText.title.split("[DD MMM YYYY]")[0]}
+                        <motion.span
+                          className="bg-primary/10 border-2 border-primary/30 rounded px-2 py-1"
+                          whileHover={{
+                            scale: 1.05,
+                            backgroundColor: "rgba(59, 130, 246, 0.2)",
+                          }}
+                          transition={{ type: "spring", stiffness: 400 }}
+                        >
+                          [DD MMM YYYY]
+                        </motion.span>
+                        {t.editing.contractText.title.split("[DD MMM YYYY]")[1]}
+                      </motion.p>
+
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.6 }}
+                      >
+                        <strong>Seller:</strong>{" "}
+                        <motion.span
+                          className="bg-yellow-100 dark:bg-yellow-900/30"
+                          whileHover={{ scale: 1.02 }}
+                        >
+                          {"{{Seller Legal Name}}"}
+                        </motion.span>
+                        , a company organized under the laws of{" "}
+                        {"{{Seller Jurisdiction}}"}, with registered address at{" "}
+                        {"{{Seller Address}}"} (&quot;Seller&quot;).
+                      </motion.p>
+
+                      <motion.p
+                        className="text-muted-foreground italic"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.8 }}
+                      >
+                        {t.editing.helpText.title}
+                      </motion.p>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+
+              {selectedDemo === "ai" && (
+                <motion.div
+                  key="ai"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+                >
+                  {/* Editor Side */}
+                  <motion.div
+                    className="space-y-4"
+                    variants={slideInFromLeft}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: false, amount: 0.3 }}
+                  >
+                    <h3 className="text-lg font-semibold flex items-center gap-2">
+                      <FileText className="h-5 w-5" />
+                      {t.ai.editorTitle.title}
+                    </h3>
+                    <div className="border rounded-lg p-4 bg-muted/20 min-h-[200px]">
+                      <motion.p
+                        className="text-sm"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        <motion.span
+                          className="bg-primary/20 border border-primary/40 rounded px-1"
+                          animate={{
+                            backgroundColor: [
+                              "rgba(59, 130, 246, 0.2)",
+                              "rgba(59, 130, 246, 0.3)",
+                              "rgba(59, 130, 246, 0.2)",
+                            ],
+                          }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          This Sales Contract establishes the terms
+                        </motion.span>{" "}
+                        for the sale of goods between the parties...
+                      </motion.p>
+
+                      <motion.div
+                        className="mt-4 p-3 bg-primary/5 border border-primary/20 rounded-lg"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.4 }}
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <motion.div
+                            animate={{ rotate: [0, 360] }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: "linear",
+                            }}
+                          >
+                            <Sparkles className="h-4 w-4 text-primary" />
+                          </motion.div>
+                          <span className="text-sm font-medium">
+                            {t.ai.selectedText.title}
+                          </span>
                         </div>
+                        <motion.div
+                          className="flex flex-wrap gap-2"
+                          variants={staggerContainer}
+                          initial="initial"
+                          animate="animate"
+                        >
+                          {[
+                            t.ai.makeFormalBadge.title,
+                            t.ai.expandBadge.title,
+                            t.ai.fixGrammarBadge.title,
+                          ].map((badge) => (
+                            <motion.div
+                              key={badge}
+                              variants={{
+                                initial: { opacity: 0, y: 10 },
+                                animate: { opacity: 1, y: 0 },
+                              }}
+                              whileHover={{ scale: 1.05, y: -2 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <Badge
+                                variant="outline"
+                                className="text-xs cursor-pointer hover:bg-primary/10"
+                              >
+                                {badge}
+                              </Badge>
+                            </motion.div>
+                          ))}
+                        </motion.div>
+                      </motion.div>
+                    </div>
+                  </motion.div>
+
+                  {/* AI Chat Side */}
+                  <motion.div
+                    className="space-y-4"
+                    variants={slideInFromRight}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: false, amount: 0.3 }}
+                  >
+                    <h3 className="text-lg font-semibold flex items-center gap-2">
+                      <MessageSquare className="h-5 w-5" />
+                      {t.ai.assistantTitle.title}
+                    </h3>
+                    <div className="border rounded-lg p-4 bg-muted/20 h-[200px] flex flex-col">
+                      <div className="flex-1 space-y-3 text-sm">
+                        <motion.div
+                          className="flex justify-end"
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.3 }}
+                        >
+                          <div className="bg-primary text-primary-foreground p-2 rounded-lg max-w-[80%]">
+                            {t.ai.userMessage.title}
+                          </div>
+                        </motion.div>
+
+                        <motion.div
+                          className="flex justify-start"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.6 }}
+                        >
+                          <div className="bg-muted p-2 rounded-lg max-w-[80%] relative">
+                            {isTyping && (
+                              <motion.div
+                                className="absolute right-2 top-2"
+                                animate={{ opacity: [0, 1, 0] }}
+                                transition={{ duration: 1.5, repeat: Infinity }}
+                              >
+                                <div className="flex space-x-1">
+                                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                                </div>
+                              </motion.div>
+                            )}
+                            {t.ai.aiResponse.title}
+                          </div>
+                        </motion.div>
                       </div>
-                      <div className="flex justify-start">
-                        <div className="bg-muted p-2 rounded-lg max-w-[80%]">
-                          {t.ai.aiResponse.title}
+
+                      <motion.div
+                        className="flex gap-2 mt-3 pt-3 border-t"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.8 }}
+                      >
+                        <div className="flex-1 bg-muted/50 rounded px-3 py-2 text-sm text-muted-foreground">
+                          {t.ai.chatPlaceholder.title}
                         </div>
-                      </div>
+                        <motion.div
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <Button size="sm">
+                            <Send className="h-4 w-4" />
+                          </Button>
+                        </motion.div>
+                      </motion.div>
                     </div>
-                    <div className="flex gap-2 mt-3 pt-3 border-t">
-                      <div className="flex-1 bg-muted/50 rounded px-3 py-2 text-sm text-muted-foreground">
-                        {t.ai.chatPlaceholder.title}
-                      </div>
-                      <Button size="sm">
-                        <Send className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+                  </motion.div>
+                </motion.div>
+              )}
 
-            {selectedDemo === "formatting" && (
-              <div className="space-y-6">
-                <h3 className="text-lg font-semibold">
-                  {t.formatting.title.title}
-                </h3>
+              {selectedDemo === "formatting" && (
+                <motion.div
+                  key="formatting"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.05 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="space-y-6"
+                >
+                  <motion.h3
+                    className="text-lg font-semibold"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    {t.formatting.title.title}
+                  </motion.h3>
 
-                {/* Enhanced Toolbar Demo */}
-                <div className="flex flex-wrap items-center gap-2 p-3 bg-muted/30 rounded-lg border">
-                  {/* Text Formatting */}
-                  <div className="flex items-center gap-1 border-r border-border pr-2 mr-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Bold"
-                    >
-                      <Bold className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Italic"
-                    >
-                      <Italic className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Underline"
-                    >
-                      <Underline className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Strikethrough"
-                    >
-                      <Strikethrough className="h-4 w-4" />
-                    </Button>
-                  </div>
+                  {/* Enhanced Toolbar Demo */}
+                  <motion.div
+                    className="flex flex-wrap items-center gap-2 p-3 bg-muted/30 rounded-lg border"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    {/* Toolbar buttons with stagger animation */}
+                    {[
+                      [Bold, Italic, Underline, Strikethrough],
+                      [AlignLeft, AlignCenter, AlignRight, AlignJustify],
+                      [List, ListOrdered, Link],
+                      [Undo, Redo, Copy],
+                    ].map((group, groupIndex) => (
+                      <motion.div
+                        key={groupIndex}
+                        className="flex items-center gap-1 border-r border-border pr-2 mr-2 last:border-r-0 last:pr-0 last:mr-0"
+                        variants={{
+                          initial: { opacity: 0, x: -10 },
+                          animate: { opacity: 1, x: 0 },
+                        }}
+                        transition={{ delay: groupIndex * 0.1 }}
+                      >
+                        {group.map((Icon, iconIndex) => (
+                          <motion.div
+                            key={iconIndex}
+                            whileHover={{ scale: 1.1, y: -2 }}
+                            whileTap={{ scale: 0.9 }}
+                          >
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0"
+                            >
+                              <Icon className="h-4 w-4" />
+                            </Button>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    ))}
 
-                  {/* Font Size & Color */}
-                  <div className="flex items-center gap-1 border-r border-border pr-2 mr-2">
-                    <select className="text-sm border border-input bg-background rounded px-2 py-1">
+                    <motion.select
+                      className="text-sm border border-input bg-background rounded px-2 py-1"
+                      whileFocus={{ scale: 1.02 }}
+                    >
                       <option>Small</option>
                       <option>Normal</option>
                       <option>Large</option>
                       <option>X-Large</option>
-                    </select>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Text Color"
-                    >
-                      <Palette className="h-4 w-4" />
-                    </Button>
-                  </div>
+                    </motion.select>
 
-                  {/* Text Alignment */}
-                  <div className="flex items-center gap-1 border-r border-border pr-2 mr-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Align Left"
-                    >
-                      <AlignLeft className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Align Center"
-                    >
-                      <AlignCenter className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Align Right"
-                    >
-                      <AlignRight className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Justify"
-                    >
-                      <AlignJustify className="h-4 w-4" />
-                    </Button>
-                  </div>
+                    <motion.div whileHover={{ scale: 1.1 }}>
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Palette className="h-4 w-4" />
+                      </Button>
+                    </motion.div>
+                  </motion.div>
 
-                  {/* Lists & Links */}
-                  <div className="flex items-center gap-1 border-r border-border pr-2 mr-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Bullet List"
+                  {/* Enhanced Formatted Text Example */}
+                  <motion.div
+                    className="border rounded-lg p-6 bg-muted/20"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                  >
+                    <motion.div
+                      className="space-y-4"
+                      variants={staggerContainer}
+                      initial="initial"
+                      whileInView="animate"
+                      viewport={{ once: false, amount: 0.3 }}
                     >
-                      <List className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Numbered List"
+                      <motion.h4
+                        className="text-2xl font-bold text-center"
+                        variants={fadeInUp}
+                      >
+                        {t.formatting.contractTitle.title}
+                      </motion.h4>
+
+                      <motion.p
+                        className="text-center italic text-lg"
+                        variants={fadeInUp}
+                      >
+                        {t.formatting.contractSubtitle.title}
+                      </motion.p>
+
+                      <motion.div
+                        className="space-y-3"
+                        variants={staggerContainer}
+                      >
+                        {/* Animated content sections */}
+                        <motion.p variants={fadeInUp}>
+                          <strong>{t.formatting.effectiveDate.title}</strong>{" "}
+                          <u>March 15, 2024</u>
+                        </motion.p>
+
+                        <motion.p
+                          style={{ color: "#0066cc" }}
+                          variants={fadeInUp}
+                        >
+                          <strong>{t.formatting.documentType.title}</strong>{" "}
+                          <motion.s
+                            animate={{ opacity: [1, 0.5, 1] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                          >
+                            {t.formatting.draftStatus.title}
+                          </motion.s>{" "}
+                          <motion.span
+                            className="text-green-600 font-semibold"
+                            animate={{ scale: [1, 1.05, 1] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                          >
+                            {t.formatting.finalStatus.title}
+                          </motion.span>
+                        </motion.p>
+
+                        <motion.div variants={fadeInUp}>
+                          <p className="font-semibold">
+                            {t.formatting.partiesTitle.title}
+                          </p>
+                          <ul className="list-disc ml-6 space-y-1 mt-2">
+                            <motion.li
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.5 }}
+                            >
+                              <strong>{t.formatting.seller.title}</strong>
+                            </motion.li>
+                            <motion.li
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.6 }}
+                            >
+                              <strong>{t.formatting.buyer.title}</strong>
+                            </motion.li>
+                          </ul>
+                        </motion.div>
+
+                        <motion.div variants={fadeInUp}>
+                          <p className="font-semibold">
+                            {t.formatting.contractTermsTitle.title}
+                          </p>
+                          <ol className="list-decimal ml-6 space-y-1 mt-2">
+                            {[
+                              t.formatting.paymentTerms.title,
+                              t.formatting.deliveryTerms.title,
+                              t.formatting.productSpecs.title,
+                            ].map((term, index) => (
+                              <motion.li
+                                key={index}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.7 + index * 0.1 }}
+                              >
+                                {term}
+                              </motion.li>
+                            ))}
+                          </ol>
+                        </motion.div>
+
+                        <motion.p
+                          className="text-right italic"
+                          variants={fadeInUp}
+                        >
+                          {t.formatting.moreInfo.title}{" "}
+                          <motion.span
+                            className="text-blue-600 underline cursor-pointer"
+                            whileHover={{ scale: 1.05 }}
+                          >
+                            {t.formatting.websiteLink.title}
+                          </motion.span>
+                        </motion.p>
+                      </motion.div>
+                    </motion.div>
+                  </motion.div>
+
+                  {/* Feature Grid */}
+                  <motion.div
+                    className="grid grid-cols-2 gap-6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                  >
+                    <motion.div
+                      initial={{ opacity: 0, x: -30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.7 }}
                     >
-                      <ListOrdered className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Insert Link"
+                      <h4 className="font-semibold mb-3">
+                        {t.formatting.features.textFormatting.title.title}
+                      </h4>
+                      <motion.ul
+                        className="text-sm text-muted-foreground space-y-2"
+                        variants={staggerContainer}
+                        initial="initial"
+                        whileInView="animate"
+                        viewport={{ once: false, amount: 0.3 }}
+                      >
+                        {[
+                          {
+                            icon: Bold,
+                            text: t.formatting.features.textFormatting
+                              .boldItalic.title,
+                          },
+                          {
+                            icon: Palette,
+                            text: t.formatting.features.textFormatting
+                              .customColors.title,
+                          },
+                          {
+                            icon: AlignCenter,
+                            text: t.formatting.features.textFormatting
+                              .textAlignment.title,
+                          },
+                          {
+                            icon: "📏",
+                            text: t.formatting.features.textFormatting.fontSizes
+                              .title,
+                          },
+                        ].map((item, index) => (
+                          <motion.li
+                            key={index}
+                            className="flex items-center gap-2"
+                            variants={{
+                              initial: { opacity: 0, x: -20 },
+                              animate: { opacity: 1, x: 0 },
+                            }}
+                            whileHover={{ x: 5, transition: { duration: 0.2 } }}
+                          >
+                            {typeof item.icon === "string" ? (
+                              <span>{item.icon}</span>
+                            ) : (
+                              <item.icon className="h-3 w-3" />
+                            )}
+                            {item.text}
+                          </motion.li>
+                        ))}
+                      </motion.ul>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.8 }}
                     >
-                      <Link className="h-4 w-4" />
-                    </Button>
-                  </div>
-
-                  {/* Undo/Redo & Copy */}
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Undo"
-                    >
-                      <Undo className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      title="Redo"
-                    >
-                      <Redo className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0 ml-2"
-                      title="Copy"
-                    >
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Enhanced Formatted Text Example */}
-                <div className="border rounded-lg p-6 bg-muted/20">
-                  <div className="space-y-4">
-                    <h4 className="text-2xl font-bold text-center">
-                      {t.formatting.contractTitle.title}
-                    </h4>
-                    <p className="text-center italic text-lg">
-                      {t.formatting.contractSubtitle.title}
-                    </p>
-
-                    <div className="space-y-3">
-                      <p>
-                        <strong>{t.formatting.effectiveDate.title}</strong>{" "}
-                        <u>March 15, 2024</u>
-                      </p>
-                      <p style={{ color: "#0066cc" }}>
-                        <strong>{t.formatting.documentType.title}</strong>{" "}
-                        <s>{t.formatting.draftStatus.title}</s>{" "}
-                        <span className="text-green-600 font-semibold">
-                          {t.formatting.finalStatus.title}
-                        </span>
-                      </p>
-
-                      <div>
-                        <p className="font-semibold">
-                          {t.formatting.partiesTitle.title}
-                        </p>
-                        <ul className="list-disc ml-6 space-y-1 mt-2">
-                          <li>
-                            <strong>{t.formatting.seller.title}</strong>
-                          </li>
-                          <li>
-                            <strong>{t.formatting.buyer.title}</strong>
-                          </li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <p className="font-semibold">
-                          {t.formatting.contractTermsTitle.title}
-                        </p>
-                        <ol className="list-decimal ml-6 space-y-1 mt-2">
-                          <li>{t.formatting.paymentTerms.title}</li>
-                          <li>{t.formatting.deliveryTerms.title}</li>
-                          <li>{t.formatting.productSpecs.title}</li>
-                        </ol>
-                      </div>
-
-                      <p className="text-right italic">
-                        {t.formatting.moreInfo.title}{" "}
-                        <span className="text-blue-600 underline cursor-pointer">
-                          {t.formatting.websiteLink.title}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Feature Grid */}
-                <div className="grid grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-semibold mb-3">
-                      {t.formatting.features.textFormatting.title.title}
-                    </h4>
-                    <ul className="text-sm text-muted-foreground space-y-2">
-                      <li className="flex items-center gap-2">
-                        <Bold className="h-3 w-3" />{" "}
-                        {t.formatting.features.textFormatting.boldItalic.title}
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Palette className="h-3 w-3" />{" "}
-                        {
-                          t.formatting.features.textFormatting.customColors
-                            .title
-                        }
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <AlignCenter className="h-3 w-3" />{" "}
-                        {
-                          t.formatting.features.textFormatting.textAlignment
-                            .title
-                        }
-                      </li>
-                      <li className="flex items-center gap-2">
-                        📏{" "}
-                        {t.formatting.features.textFormatting.fontSizes.title}
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-3">
-                      {t.formatting.features.advancedFeatures.title.title}
-                    </h4>
-                    <ul className="text-sm text-muted-foreground space-y-2">
-                      <li className="flex items-center gap-2">
-                        <List className="h-3 w-3" />{" "}
-                        {t.formatting.features.advancedFeatures.lists.title}
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Link className="h-3 w-3" />{" "}
-                        {
-                          t.formatting.features.advancedFeatures.hyperlinks
-                            .title
-                        }
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Undo className="h-3 w-3" />{" "}
-                        {t.formatting.features.advancedFeatures.undoRedo.title}
-                      </li>
-                      <li className="flex items-center gap-2">
-                        ⚡{" "}
-                        {
-                          t.formatting.features.advancedFeatures.realtimePreview
-                            .title
-                        }
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            )}
+                      <h4 className="font-semibold mb-3">
+                        {t.formatting.features.advancedFeatures.title.title}
+                      </h4>
+                      <motion.ul
+                        className="text-sm text-muted-foreground space-y-2"
+                        variants={staggerContainer}
+                        initial="initial"
+                        whileInView="animate"
+                        viewport={{ once: false, amount: 0.3 }}
+                      >
+                        {[
+                          {
+                            icon: List,
+                            text: t.formatting.features.advancedFeatures.lists
+                              .title,
+                          },
+                          {
+                            icon: Link,
+                            text: t.formatting.features.advancedFeatures
+                              .hyperlinks.title,
+                          },
+                          {
+                            icon: Undo,
+                            text: t.formatting.features.advancedFeatures
+                              .undoRedo.title,
+                          },
+                          {
+                            icon: "⚡",
+                            text: t.formatting.features.advancedFeatures
+                              .realtimePreview.title,
+                          },
+                        ].map((item, index) => (
+                          <motion.li
+                            key={index}
+                            className="flex items-center gap-2"
+                            variants={{
+                              initial: { opacity: 0, x: -20 },
+                              animate: { opacity: 1, x: 0 },
+                            }}
+                            whileHover={{ x: 5, transition: { duration: 0.2 } }}
+                          >
+                            {typeof item.icon === "string" ? (
+                              <span>{item.icon}</span>
+                            ) : (
+                              <item.icon className="h-3 w-3" />
+                            )}
+                            {item.text}
+                          </motion.li>
+                        ))}
+                      </motion.ul>
+                    </motion.div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </Card>
-        </div>
+        </motion.div>
 
         {/* CTA */}
-        <div className="text-center mt-12">
-          <Button onClick={handleTryEditor} size="lg" className="px-8">
-            {t.cta.buttonText.title}
-            <ArrowRight className="h-4 w-4 ml-2" />
-          </Button>
-          <p className="text-sm text-muted-foreground mt-4">
+        <motion.div
+          className="text-center mt-12"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: false, amount: 0.3 }}
+          variants={fadeInUp}
+        >
+          <motion.div
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+            }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button
+              onClick={handleTryEditor}
+              size="lg"
+              className="px-8 relative overflow-hidden group"
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/40 opacity-0 group-hover:opacity-100"
+                initial={false}
+                transition={{ duration: 0.3 }}
+              />
+              <span className="relative z-10">{t.cta.buttonText.title}</span>
+              <motion.div
+                className="relative z-10 ml-2"
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              >
+                <ArrowRight className="h-4 w-4" />
+              </motion.div>
+            </Button>
+          </motion.div>
+
+          <motion.p
+            className="text-sm text-muted-foreground mt-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
             {t.cta.subtitle.title}
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </div>
     </section>
   );
