@@ -3,6 +3,7 @@ import AIToneDemo from "@/components/general/aiToneDemo";
 import Ambassador from "@/components/general/ambassador";
 import ClientLogos from "@/components/general/clientLogos";
 import CTA from "@/components/general/cta";
+import DocumentIntelligenceDemo from "@/components/general/documentIntelligence";
 import FAQ from "@/components/general/faq";
 import Features from "@/components/general/features";
 import Footer from "@/components/general/footer";
@@ -32,6 +33,7 @@ export default function Home() {
       <Hero />
       <ClientLogos />
       <Features />
+      <DocumentIntelligenceDemo />
       <Templates />
       <TextEditorPreview />
       <WorkflowVideo />
