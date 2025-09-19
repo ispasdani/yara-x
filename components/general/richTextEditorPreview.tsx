@@ -215,7 +215,7 @@ const TextEditorPreview = () => {
           className="flex justify-center mb-8"
           initial="initial"
           whileInView="animate"
-          viewport={{ once: false, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
           variants={fadeInUp}
         >
           <div className="flex bg-muted/50 rounded-lg p-1">
@@ -878,24 +878,12 @@ const TextEditorPreview = () => {
         </motion.div>
 
         {/* CTA */}
-        <motion.div
-          className="text-center mt-12"
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: false, amount: 0.3 }}
-          variants={fadeInUp}
-        >
-          <motion.div
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
+        <motion.div className="text-center mt-12" initial="initial">
+          <motion.div whileTap={{ scale: 0.95 }}>
             <Button
               onClick={handleTryEditor}
               size="lg"
-              className="px-8 relative overflow-hidden group"
+              className="px-8 relative overflow-hidden group cursor-pointer"
             >
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/40 opacity-0 group-hover:opacity-100"
