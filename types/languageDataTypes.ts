@@ -151,5 +151,73 @@ export interface LanguageData {
         text: { title: string };
       };
     };
+    textEditor: {
+      badge: { title: string };
+      title: { title: string };
+      description: { title: string };
+      demoTabs: {
+        editing: { title: string };
+        ai: { title: string };
+        formatting: { title: string };
+      };
+      editing: {
+        documentTitle: { title: string };
+        copyButton: { title: string };
+        aiChatButton: { title: string };
+        sectionTitle: { title: string };
+        contractText: { title: string };
+        sellerText: { title: string };
+        helpText: { title: string };
+      };
+      ai: {
+        editorTitle: { title: string };
+        assistantTitle: { title: string };
+        selectedText: { title: string };
+        makeFormalBadge: { title: string };
+        expandBadge: { title: string };
+        fixGrammarBadge: { title: string };
+        userMessage: { title: string };
+        aiResponse: { title: string };
+        chatPlaceholder: { title: string };
+      };
+      formatting: {
+        title: { title: string };
+        contractTitle: { title: string };
+        contractSubtitle: { title: string };
+        effectiveDate: { title: string };
+        documentType: { title: string };
+        draftStatus: { title: string };
+        finalStatus: { title: string };
+        partiesTitle: { title: string };
+        seller: { title: string };
+        buyer: { title: string };
+        contractTermsTitle: { title: string };
+        paymentTerms: { title: string };
+        deliveryTerms: { title: string };
+        productSpecs: { title: string };
+        moreInfo: { title: string };
+        websiteLink: { title: string };
+        features: {
+          textFormatting: {
+            title: { title: string };
+            boldItalic: { title: string };
+            customColors: { title: string };
+            textAlignment: { title: string };
+            fontSizes: { title: string };
+          };
+          advancedFeatures: {
+            title: { title: string };
+            lists: { title: string };
+            hyperlinks: { title: string };
+            undoRedo: { title: string };
+            realtimePreview: { title: string };
+          };
+        };
+      };
+      cta: {
+        buttonText: { title: string };
+        subtitle: { title: string };
+      };
+    };
   };
 }

@@ -6,6 +6,7 @@ import clientLogos from "./public/clientLogos";
 import mainFeatures from "./public/mainFeatures";
 import templates from "./public/templates";
 import documentIntelligence from "./public/documentIntelligence";
+import textEditor  from "./public/textEditor";
 
 const en: Record<string, LanguageData> = {
   en: {
@@ -16,7 +17,8 @@ const en: Record<string, LanguageData> = {
       clientLogos,
       mainFeatures,
       templates,
-      documentIntelligence
+      documentIntelligence,
+      textEditor
     },
   },
 };

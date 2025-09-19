@@ -27,8 +27,100 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useLanguageData } from "@/hooks/useLanguageData";
+import type { LanguageData } from "@/types/languageDataTypes";
+
+// Default values for SSR/SEO
+const DEFAULT_TEXT_EDITOR: LanguageData["public"]["textEditor"] = {
+  badge: { title: "AI-Powered Text Editor" },
+  title: { title: "Professional Document Editing" },
+  description: {
+    title:
+      "Edit your legal templates with our intelligent text editor. Select text, get AI suggestions, and format documents with professional-grade tools.",
+  },
+  demoTabs: {
+    editing: { title: "Text Editing" },
+    ai: { title: "AI Assistant" },
+    formatting: { title: "Formatting" },
+  },
+  editing: {
+    documentTitle: { title: "Sales Contract (Goods)" },
+    copyButton: { title: "Copy" },
+    aiChatButton: { title: "AI Chat" },
+    sectionTitle: { title: "1. Parties & Effective Date" },
+    contractText: {
+      title:
+        'This Sales Contract (the "Agreement") is made as of [DD MMM YYYY] (the "Effective Date") by and between:',
+    },
+    sellerText: {
+      title:
+        'Seller: {{Seller Legal Name}}, a company organized under the laws of {{Seller Jurisdiction}}, with registered address at {{Seller Address}} ("Seller").',
+    },
+    helpText: {
+      title: "← Select any text to get AI suggestions for improvements",
+    },
+  },
+  ai: {
+    editorTitle: { title: "Document Editor" },
+    assistantTitle: { title: "AI Assistant" },
+    selectedText: { title: 'Selected: "This Sales Contract establishes..."' },
+    makeFormalBadge: { title: "Make Formal" },
+    expandBadge: { title: "Expand" },
+    fixGrammarBadge: { title: "Fix Grammar" },
+    userMessage: { title: "Make this more professional" },
+    aiResponse: {
+      title:
+        'Here\'s a more professional version: "This Sales Agreement hereby establishes the comprehensive terms and conditions..."',
+    },
+    chatPlaceholder: { title: "Ask AI to help with your text..." },
+  },
+  formatting: {
+    title: { title: "Rich Text Formatting" },
+    contractTitle: { title: "SALES CONTRACT (GOODS)" },
+    contractSubtitle: { title: "Professional Document Template" },
+    effectiveDate: { title: "Effective Date:" },
+    documentType: { title: "Document Type:" },
+    draftStatus: { title: "Draft" },
+    finalStatus: { title: "Final" },
+    partiesTitle: { title: "Parties involved in this agreement:" },
+    seller: { title: "Seller: ABC Corporation Ltd." },
+    buyer: { title: "Buyer: XYZ Limited Partnership" },
+    contractTermsTitle: { title: "Contract Terms (Numbered List):" },
+    paymentTerms: { title: "Payment terms and conditions" },
+    deliveryTerms: { title: "Delivery and shipping arrangements" },
+    productSpecs: { title: "Product specifications and warranties" },
+    moreInfo: { title: "For more information, visit:" },
+    websiteLink: { title: "www.contracthelp.com" },
+    features: {
+      textFormatting: {
+        title: { title: "Text Formatting" },
+        boldItalic: { title: "Bold, italic, underline, strikethrough" },
+        customColors: { title: "Custom text colors" },
+        textAlignment: {
+          title: "Text alignment (left, center, right, justify)",
+        },
+        fontSizes: { title: "Multiple font sizes" },
+      },
+      advancedFeatures: {
+        title: { title: "Advanced Features" },
+        lists: { title: "Bullet and numbered lists" },
+        hyperlinks: { title: "Hyperlink insertion and editing" },
+        undoRedo: { title: "Undo/redo functionality" },
+        realtimePreview: { title: "Real-time formatting preview" },
+      },
+    },
+  },
+  cta: {
+    buttonText: { title: "Try the Text Editor" },
+    subtitle: {
+      title: "Experience professional document editing with AI assistance",
+    },
+  },
+};
 
 const TextEditorPreview = () => {
+  const { langData } = useLanguageData();
+  const t = langData?.public.textEditor ?? DEFAULT_TEXT_EDITOR;
   const router = useRouter();
   const [selectedDemo, setSelectedDemo] = useState("editing");
 
@@ -45,15 +137,11 @@ const TextEditorPreview = () => {
         <div className="text-center mb-16">
           <Badge variant="secondary" className="mb-4">
             <Sparkles className="h-4 w-4 mr-2" />
-            AI-Powered Text Editor
+            {t.badge.title}
           </Badge>
-          <h2 className="text-4xl font-bold mb-6">
-            Professional Document Editing
-          </h2>
+          <h2 className="text-4xl font-bold mb-6">{t.title.title}</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Edit your legal templates with our intelligent text editor. Select
-            text, get AI suggestions, and format documents with
-            professional-grade tools.
+            {t.description.title}
           </p>
         </div>
 
@@ -66,7 +154,7 @@ const TextEditorPreview = () => {
               onClick={() => setSelectedDemo("editing")}
               className="mx-1"
             >
-              Text Editing
+              {t.demoTabs.editing.title}
             </Button>
             <Button
               variant={selectedDemo === "ai" ? "default" : "ghost"}
@@ -74,7 +162,7 @@ const TextEditorPreview = () => {
               onClick={() => setSelectedDemo("ai")}
               className="mx-1"
             >
-              AI Assistant
+              {t.demoTabs.ai.title}
             </Button>
             <Button
               variant={selectedDemo === "formatting" ? "default" : "ghost"}
@@ -82,7 +170,7 @@ const TextEditorPreview = () => {
               onClick={() => setSelectedDemo("formatting")}
               className="mx-1"
             >
-              Formatting
+              {t.demoTabs.formatting.title}
             </Button>
           </div>
         </div>
@@ -97,18 +185,18 @@ const TextEditorPreview = () => {
                     <div className="flex items-center gap-2">
                       <FileText className="h-5 w-5 text-muted-foreground" />
                       <h3 className="text-lg font-semibold">
-                        Sales Contract (Goods)
+                        {t.editing.documentTitle.title}
                       </h3>
                     </div>
                   </div>
                   <div className="flex gap-2">
                     <Button variant="outline" size="sm">
                       <Copy className="h-4 w-4 mr-2" />
-                      Copy
+                      {t.editing.copyButton.title}
                     </Button>
                     <Button variant="outline" size="sm">
                       <MessageSquare className="h-4 w-4 mr-2" />
-                      AI Chat
+                      {t.editing.aiChatButton.title}
                     </Button>
                   </div>
                 </div>
@@ -116,14 +204,14 @@ const TextEditorPreview = () => {
                 <div className="border rounded-lg p-6 bg-muted/20 min-h-[300px]">
                   <div className="space-y-4 text-sm">
                     <h4 className="font-semibold text-lg">
-                      1. Parties & Effective Date
+                      {t.editing.sectionTitle.title}
                     </h4>
                     <p>
-                      This Sales Contract (the "Agreement") is made as of{" "}
+                      {t.editing.contractText.title.split("[DD MMM YYYY]")[0]}
                       <span className="bg-primary/10 border-2 border-primary/30 rounded px-2 py-1">
                         [DD MMM YYYY]
-                      </span>{" "}
-                      (the "Effective Date") by and between:
+                      </span>
+                      {t.editing.contractText.title.split("[DD MMM YYYY]")[1]}
                     </p>
                     <p>
                       <strong>Seller:</strong>{" "}
@@ -132,10 +220,10 @@ const TextEditorPreview = () => {
                       </span>
                       , a company organized under the laws of{" "}
                       {"{{Seller Jurisdiction}}"}, with registered address at{" "}
-                      {"{{Seller Address}}"} ("Seller").
+                      {"{{Seller Address}}"} (&quot;Seller&quot;).
                     </p>
                     <p className="text-muted-foreground italic">
-                      ← Select any text to get AI suggestions for improvements
+                      {t.editing.helpText.title}
                     </p>
                   </div>
                 </div>
@@ -148,7 +236,7 @@ const TextEditorPreview = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold flex items-center gap-2">
                     <FileText className="h-5 w-5" />
-                    Document Editor
+                    {t.ai.editorTitle.title}
                   </h3>
                   <div className="border rounded-lg p-4 bg-muted/20 min-h-[200px]">
                     <p className="text-sm">
@@ -161,7 +249,7 @@ const TextEditorPreview = () => {
                       <div className="flex items-center gap-2 mb-2">
                         <Sparkles className="h-4 w-4 text-primary" />
                         <span className="text-sm font-medium">
-                          Selected: "This Sales Contract establishes..."
+                          {t.ai.selectedText.title}
                         </span>
                       </div>
                       <div className="flex flex-wrap gap-2">
@@ -169,19 +257,19 @@ const TextEditorPreview = () => {
                           variant="outline"
                           className="text-xs cursor-pointer hover:bg-primary/10"
                         >
-                          Make Formal
+                          {t.ai.makeFormalBadge.title}
                         </Badge>
                         <Badge
                           variant="outline"
                           className="text-xs cursor-pointer hover:bg-primary/10"
                         >
-                          Expand
+                          {t.ai.expandBadge.title}
                         </Badge>
                         <Badge
                           variant="outline"
                           className="text-xs cursor-pointer hover:bg-primary/10"
                         >
-                          Fix Grammar
+                          {t.ai.fixGrammarBadge.title}
                         </Badge>
                       </div>
                     </div>
@@ -192,26 +280,24 @@ const TextEditorPreview = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-semibold flex items-center gap-2">
                     <MessageSquare className="h-5 w-5" />
-                    AI Assistant
+                    {t.ai.assistantTitle.title}
                   </h3>
                   <div className="border rounded-lg p-4 bg-muted/20 h-[200px] flex flex-col">
                     <div className="flex-1 space-y-3 text-sm">
                       <div className="flex justify-end">
                         <div className="bg-primary text-primary-foreground p-2 rounded-lg max-w-[80%]">
-                          Make this more professional
+                          {t.ai.userMessage.title}
                         </div>
                       </div>
                       <div className="flex justify-start">
                         <div className="bg-muted p-2 rounded-lg max-w-[80%]">
-                          Here's a more professional version: "This Sales
-                          Agreement hereby establishes the comprehensive terms
-                          and conditions..."
+                          {t.ai.aiResponse.title}
                         </div>
                       </div>
                     </div>
                     <div className="flex gap-2 mt-3 pt-3 border-t">
                       <div className="flex-1 bg-muted/50 rounded px-3 py-2 text-sm text-muted-foreground">
-                        Ask AI to help with your text...
+                        {t.ai.chatPlaceholder.title}
                       </div>
                       <Button size="sm">
                         <Send className="h-4 w-4" />
@@ -224,7 +310,9 @@ const TextEditorPreview = () => {
 
             {selectedDemo === "formatting" && (
               <div className="space-y-6">
-                <h3 className="text-lg font-semibold">Rich Text Formatting</h3>
+                <h3 className="text-lg font-semibold">
+                  {t.formatting.title.title}
+                </h3>
 
                 {/* Enhanced Toolbar Demo */}
                 <div className="flex flex-wrap items-center gap-2 p-3 bg-muted/30 rounded-lg border">
@@ -379,52 +467,54 @@ const TextEditorPreview = () => {
                 <div className="border rounded-lg p-6 bg-muted/20">
                   <div className="space-y-4">
                     <h4 className="text-2xl font-bold text-center">
-                      SALES CONTRACT (GOODS)
+                      {t.formatting.contractTitle.title}
                     </h4>
                     <p className="text-center italic text-lg">
-                      Professional Document Template
+                      {t.formatting.contractSubtitle.title}
                     </p>
 
                     <div className="space-y-3">
                       <p>
-                        <strong>Effective Date:</strong> <u>March 15, 2024</u>
+                        <strong>{t.formatting.effectiveDate.title}</strong>{" "}
+                        <u>March 15, 2024</u>
                       </p>
                       <p style={{ color: "#0066cc" }}>
-                        <strong>Document Type:</strong> <s>Draft</s>{" "}
+                        <strong>{t.formatting.documentType.title}</strong>{" "}
+                        <s>{t.formatting.draftStatus.title}</s>{" "}
                         <span className="text-green-600 font-semibold">
-                          Final
+                          {t.formatting.finalStatus.title}
                         </span>
                       </p>
 
                       <div>
                         <p className="font-semibold">
-                          Parties involved in this agreement:
+                          {t.formatting.partiesTitle.title}
                         </p>
                         <ul className="list-disc ml-6 space-y-1 mt-2">
                           <li>
-                            <strong>Seller:</strong> ABC Corporation Ltd.
+                            <strong>{t.formatting.seller.title}</strong>
                           </li>
                           <li>
-                            <strong>Buyer:</strong> XYZ Limited Partnership
+                            <strong>{t.formatting.buyer.title}</strong>
                           </li>
                         </ul>
                       </div>
 
                       <div>
                         <p className="font-semibold">
-                          Contract Terms (Numbered List):
+                          {t.formatting.contractTermsTitle.title}
                         </p>
                         <ol className="list-decimal ml-6 space-y-1 mt-2">
-                          <li>Payment terms and conditions</li>
-                          <li>Delivery and shipping arrangements</li>
-                          <li>Product specifications and warranties</li>
+                          <li>{t.formatting.paymentTerms.title}</li>
+                          <li>{t.formatting.deliveryTerms.title}</li>
+                          <li>{t.formatting.productSpecs.title}</li>
                         </ol>
                       </div>
 
                       <p className="text-right italic">
-                        For more information, visit:{" "}
+                        {t.formatting.moreInfo.title}{" "}
                         <span className="text-blue-600 underline cursor-pointer">
-                          www.contracthelp.com
+                          {t.formatting.websiteLink.title}
                         </span>
                       </p>
                     </div>
@@ -434,39 +524,60 @@ const TextEditorPreview = () => {
                 {/* Feature Grid */}
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-semibold mb-3">Text Formatting</h4>
+                    <h4 className="font-semibold mb-3">
+                      {t.formatting.features.textFormatting.title.title}
+                    </h4>
                     <ul className="text-sm text-muted-foreground space-y-2">
                       <li className="flex items-center gap-2">
-                        <Bold className="h-3 w-3" /> Bold, italic, underline,
-                        strikethrough
+                        <Bold className="h-3 w-3" />{" "}
+                        {t.formatting.features.textFormatting.boldItalic.title}
                       </li>
                       <li className="flex items-center gap-2">
-                        <Palette className="h-3 w-3" /> Custom text colors
+                        <Palette className="h-3 w-3" />{" "}
+                        {
+                          t.formatting.features.textFormatting.customColors
+                            .title
+                        }
                       </li>
                       <li className="flex items-center gap-2">
-                        <AlignCenter className="h-3 w-3" /> Text alignment
-                        (left, center, right, justify)
+                        <AlignCenter className="h-3 w-3" />{" "}
+                        {
+                          t.formatting.features.textFormatting.textAlignment
+                            .title
+                        }
                       </li>
                       <li className="flex items-center gap-2">
-                        📏 Multiple font sizes
+                        📏{" "}
+                        {t.formatting.features.textFormatting.fontSizes.title}
                       </li>
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-3">Advanced Features</h4>
+                    <h4 className="font-semibold mb-3">
+                      {t.formatting.features.advancedFeatures.title.title}
+                    </h4>
                     <ul className="text-sm text-muted-foreground space-y-2">
                       <li className="flex items-center gap-2">
-                        <List className="h-3 w-3" /> Bullet and numbered lists
+                        <List className="h-3 w-3" />{" "}
+                        {t.formatting.features.advancedFeatures.lists.title}
                       </li>
                       <li className="flex items-center gap-2">
-                        <Link className="h-3 w-3" /> Hyperlink insertion and
-                        editing
+                        <Link className="h-3 w-3" />{" "}
+                        {
+                          t.formatting.features.advancedFeatures.hyperlinks
+                            .title
+                        }
                       </li>
                       <li className="flex items-center gap-2">
-                        <Undo className="h-3 w-3" /> Undo/redo functionality
+                        <Undo className="h-3 w-3" />{" "}
+                        {t.formatting.features.advancedFeatures.undoRedo.title}
                       </li>
                       <li className="flex items-center gap-2">
-                        ⚡ Real-time formatting preview
+                        ⚡{" "}
+                        {
+                          t.formatting.features.advancedFeatures.realtimePreview
+                            .title
+                        }
                       </li>
                     </ul>
                   </div>
@@ -479,11 +590,11 @@ const TextEditorPreview = () => {
         {/* CTA */}
         <div className="text-center mt-12">
           <Button onClick={handleTryEditor} size="lg" className="px-8">
-            Try the Text Editor
+            {t.cta.buttonText.title}
             <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
           <p className="text-sm text-muted-foreground mt-4">
-            Experience professional document editing with AI assistance
+            {t.cta.subtitle.title}
           </p>
         </div>
       </div>
