@@ -86,5 +86,70 @@ export interface LanguageData {
         };
       };
     };
+    documentIntelligence: {
+      title: { title: string };
+      description: { title: string };
+      primaryButtonText: { title: string };
+      secondaryButtonText: { title: string };
+      features: {
+        smartUpload: {
+          title: { title: string };
+          description: { title: string };
+        };
+        dataExtraction: {
+          title: { title: string };
+          description: { title: string };
+        };
+        contextualQA: {
+          title: { title: string };
+          description: { title: string };
+        };
+        deepSearch: {
+          title: { title: string };
+          description: { title: string };
+        };
+      };
+      uploadArea: {
+        title: { title: string };
+        subtitle: { title: string };
+        sampleFileName: { title: string };
+        processedStatus: { title: string };
+      };
+      qaSection: {
+        title: { title: string };
+        responseLabel: { title: string };
+        processingText: { title: string };
+        placeholderText: { title: string };
+      };
+      sampleQuestions: {
+        keyTerms: { title: string };
+        expiration: { title: string };
+        parties: { title: string };
+        termination: { title: string };
+      };
+      sampleAnswers: {
+        keyTerms: { title: string };
+        expiration: { title: string };
+        parties: { title: string };
+        termination: { title: string };
+      };
+      stats: {
+        instant: {
+          label: { title: string };
+          sublabel: { title: string };
+        };
+        accuracy: {
+          label: { title: string };
+          sublabel: { title: string };
+        };
+        fileTypes: {
+          label: { title: string };
+          sublabel: { title: string };
+        };
+      };
+      badge: {
+        text: { title: string };
+      };
+    };
   };
 }

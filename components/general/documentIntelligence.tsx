@@ -12,47 +12,106 @@ import {
   Zap,
 } from "lucide-react";
 import { Button } from "../ui/button";
+import { useLanguageData } from "@/hooks/useLanguageData";
+import type { LanguageData } from "@/types/languageDataTypes";
 
-const intelligenceFeatures = [
+// Default values for SSR/SEO
+const DEFAULT_DOCUMENT_INTELLIGENCE: LanguageData["public"]["documentIntelligence"] =
   {
-    icon: Upload,
-    title: "Smart Document Upload",
-    description:
-      "Drag & drop any document format - PDFs, Word docs, contracts, and more",
-  },
-  {
-    icon: Database,
-    title: "Intelligent Data Extraction",
-    description:
-      "AI automatically identifies and extracts key information, dates, parties, and clauses",
-  },
-  {
-    icon: MessageSquare,
-    title: "Contextual Q&A",
-    description:
-      "Ask questions about your documents and get instant, accurate answers",
-  },
-  {
-    icon: Search,
-    title: "Deep Document Search",
-    description:
-      "Search across all your documents with semantic understanding, not just keywords",
-  },
-];
-
-const sampleQuestions = [
-  "What are the key terms in this contract?",
-  "When does this agreement expire?",
-  "Who are the parties involved?",
-  "What are the termination clauses?",
-];
-
-const sampleAnswers = [
-  "Based on the uploaded contract, the key terms include: 24-month service period, $50,000 total value, quarterly payment schedule, and 30-day termination notice requirement.",
-  "The agreement expires on December 31, 2025, with an automatic renewal clause for additional 12-month periods unless terminated.",
-  "The parties are: ABC Legal Services (Provider) and XYZ Corporation (Client), with signatures from authorized representatives.",
-  "Termination clauses allow either party to terminate with 30 days written notice. Early termination fees apply if terminated before 12 months.",
-];
+    title: { title: "Document Intelligence & AI Q&A" },
+    description: {
+      title:
+        "Upload any legal document and instantly transform it into an intelligent, searchable knowledge base. Ask questions and get precise answers based on your content.",
+    },
+    primaryButtonText: { title: "Try Document Intelligence" },
+    secondaryButtonText: { title: "View Demo" },
+    features: {
+      smartUpload: {
+        title: { title: "Smart Document Upload" },
+        description: {
+          title:
+            "Drag & drop any document format - PDFs, Word docs, contracts, and more",
+        },
+      },
+      dataExtraction: {
+        title: { title: "Intelligent Data Extraction" },
+        description: {
+          title:
+            "AI automatically identifies and extracts key information, dates, parties, and clauses",
+        },
+      },
+      contextualQA: {
+        title: { title: "Contextual Q&A" },
+        description: {
+          title:
+            "Ask questions about your documents and get instant, accurate answers",
+        },
+      },
+      deepSearch: {
+        title: { title: "Deep Document Search" },
+        description: {
+          title:
+            "Search across all your documents with semantic understanding, not just keywords",
+        },
+      },
+    },
+    uploadArea: {
+      title: { title: "Drop your legal documents here" },
+      subtitle: { title: "PDF, DOCX, TXT files supported" },
+      sampleFileName: { title: "service-agreement.pdf" },
+      processedStatus: { title: "Processed" },
+    },
+    qaSection: {
+      title: { title: "Ask Questions About Your Document" },
+      responseLabel: { title: "AI Response" },
+      processingText: { title: "Analyzing document..." },
+      placeholderText: {
+        title:
+          "Select a question above to see how our AI analyzes your document",
+      },
+    },
+    sampleQuestions: {
+      keyTerms: { title: "What are the key terms in this contract?" },
+      expiration: { title: "When does this agreement expire?" },
+      parties: { title: "Who are the parties involved?" },
+      termination: { title: "What are the termination clauses?" },
+    },
+    sampleAnswers: {
+      keyTerms: {
+        title:
+          "Based on the uploaded contract, the key terms include: 24-month service period, $50,000 total value, quarterly payment schedule, and 30-day termination notice requirement.",
+      },
+      expiration: {
+        title:
+          "The agreement expires on December 31, 2025, with an automatic renewal clause for additional 12-month periods unless terminated.",
+      },
+      parties: {
+        title:
+          "The parties are: ABC Legal Services (Provider) and XYZ Corporation (Client), with signatures from authorized representatives.",
+      },
+      termination: {
+        title:
+          "Termination clauses allow either party to terminate with 30 days written notice. Early termination fees apply if terminated before 12 months.",
+      },
+    },
+    stats: {
+      instant: {
+        label: { title: "Instant" },
+        sublabel: { title: "Processing" },
+      },
+      accuracy: {
+        label: { title: "99%" },
+        sublabel: { title: "Accuracy" },
+      },
+      fileTypes: {
+        label: { title: "50+" },
+        sublabel: { title: "File Types" },
+      },
+    },
+    badge: {
+      text: { title: "New Feature" },
+    },
+  };
 
 // Animation variants with proper typing
 const containerVariants = {
@@ -144,9 +203,51 @@ const badgeVariants = {
 } as const;
 
 const DocumentIntelligenceDemo = () => {
+  const { langData } = useLanguageData();
+  const t =
+    langData?.public.documentIntelligence ?? DEFAULT_DOCUMENT_INTELLIGENCE;
+
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [isProcessing, setIsProcessing] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
+
+  // Create arrays from the localized data
+  const intelligenceFeatures = [
+    {
+      icon: Upload,
+      title: t.features.smartUpload.title.title,
+      description: t.features.smartUpload.description.title,
+    },
+    {
+      icon: Database,
+      title: t.features.dataExtraction.title.title,
+      description: t.features.dataExtraction.description.title,
+    },
+    {
+      icon: MessageSquare,
+      title: t.features.contextualQA.title.title,
+      description: t.features.contextualQA.description.title,
+    },
+    {
+      icon: Search,
+      title: t.features.deepSearch.title.title,
+      description: t.features.deepSearch.description.title,
+    },
+  ];
+
+  const sampleQuestions = [
+    t.sampleQuestions.keyTerms.title,
+    t.sampleQuestions.expiration.title,
+    t.sampleQuestions.parties.title,
+    t.sampleQuestions.termination.title,
+  ];
+
+  const sampleAnswers = [
+    t.sampleAnswers.keyTerms.title,
+    t.sampleAnswers.expiration.title,
+    t.sampleAnswers.parties.title,
+    t.sampleAnswers.termination.title,
+  ];
 
   const handleQuestionClick = (index: number) => {
     if (activeQuestion === index && showAnswer) return;
@@ -178,18 +279,14 @@ const DocumentIntelligenceDemo = () => {
                 className="text-5xl font-bold text-gray-900 mb-6 font-serif"
                 variants={itemVariants}
               >
-                Document Intelligence{" "}
-                <span className="font-sans text-2xl"> & </span>
-                AI Q<span className="font-sans text-2xl">&</span>A
+                {t.title.title}
               </motion.h2>
 
               <motion.p
                 className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mt-3 mb-6"
                 variants={itemVariants}
               >
-                Upload any legal document and instantly transform it into an
-                intelligent, searchable knowledge base. Ask questions and get
-                precise answers based on your content.
+                {t.description.title}
               </motion.p>
 
               <motion.div
@@ -198,7 +295,7 @@ const DocumentIntelligenceDemo = () => {
               >
                 <motion.div whileTap={{ scale: 0.95 }}>
                   <Button className="inline-flex items-center justify-center p-5 text-base font-medium rounded-lg cursor-pointer">
-                    Try Document Intelligence
+                    {t.primaryButtonText.title}
                   </Button>
                 </motion.div>
 
@@ -208,7 +305,7 @@ const DocumentIntelligenceDemo = () => {
                     className="hover:text-foreground cursor-pointer p-5"
                     style={{ color: "var(--muted-foreground)" }}
                   >
-                    View Demo
+                    {t.secondaryButtonText.title}
                   </Button>
                 </motion.div>
               </motion.div>
@@ -280,10 +377,10 @@ const DocumentIntelligenceDemo = () => {
                     <Upload className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   </motion.div>
                   <p className="text-foreground font-medium mb-2">
-                    Drop your legal documents here
+                    {t.uploadArea.title.title}
                   </p>
                   <p className="text-body text-sm">
-                    PDF, DOCX, TXT files supported
+                    {t.uploadArea.subtitle.title}
                   </p>
 
                   {/* Sample uploaded document */}
@@ -297,14 +394,14 @@ const DocumentIntelligenceDemo = () => {
                   >
                     <FileText className="h-4 w-4 text-primary" />
                     <span className="text-sm font-medium text-primary">
-                      service-agreement.pdf
+                      {t.uploadArea.sampleFileName.title}
                     </span>
                     <motion.span
                       className="text-xs text-muted-foreground"
                       animate={{ opacity: [0.5, 1, 0.5] }}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
-                      Processed
+                      {t.uploadArea.processedStatus.title}
                     </motion.span>
                   </motion.div>
                 </motion.div>
@@ -336,7 +433,7 @@ const DocumentIntelligenceDemo = () => {
                     <Brain className="h-5 w-5 text-primary" />
                   </motion.div>
                   <h4 className="font-serif text-lg font-semibold text-foreground">
-                    Ask Questions About Your Document
+                    {t.qaSection.title.title}
                   </h4>
                 </motion.div>
 
@@ -397,7 +494,7 @@ const DocumentIntelligenceDemo = () => {
                   >
                     <MessageSquare className="h-4 w-4 text-primary" />
                     <span className="text-xs font-medium text-primary uppercase tracking-wide">
-                      AI Response
+                      {t.qaSection.responseLabel.title}
                     </span>
                   </motion.div>
 
@@ -425,7 +522,7 @@ const DocumentIntelligenceDemo = () => {
                         ))}
                       </div>
                       <span className="text-body text-sm">
-                        Analyzing document...
+                        {t.qaSection.processingText.title}
                       </span>
                     </motion.div>
                   ) : showAnswer ? (
@@ -439,28 +536,37 @@ const DocumentIntelligenceDemo = () => {
                     </motion.p>
                   ) : (
                     <p className="text-muted-foreground text-sm italic">
-                      Select a question above to see how our AI analyzes your
-                      document
+                      {t.qaSection.placeholderText.title}
                     </p>
                   )}
                 </motion.div>
 
                 {/* Stats */}
                 <motion.div
-                  className="grid grid-cols-3 gap-3 mt-6"
+                  className="grid grid-cols-3 gap-3 mt-6 "
                   variants={containerVariants}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: false, amount: 0.3 }}
                 >
                   {[
-                    { icon: Zap, label: "Instant", sublabel: "Processing" },
-                    { label: "99%", sublabel: "Accuracy" },
-                    { label: "50+", sublabel: "File Types" },
+                    {
+                      icon: Zap,
+                      label: t.stats.instant.label.title,
+                      sublabel: t.stats.instant.sublabel.title,
+                    },
+                    {
+                      label: t.stats.accuracy.label.title,
+                      sublabel: t.stats.accuracy.sublabel.title,
+                    },
+                    {
+                      label: t.stats.fileTypes.label.title,
+                      sublabel: t.stats.fileTypes.sublabel.title,
+                    },
                   ].map((stat, index) => (
                     <motion.div
                       key={index}
-                      className="text-center p-3 bg-primary/5 rounded-lg"
+                      className="text-center p-3 bg-primary/5 rounded-lg flex flex-col items-center justify-center"
                       initial={{ opacity: 0, scale: 0.8, y: 20 }}
                       whileInView={{
                         opacity: 1,
@@ -480,7 +586,7 @@ const DocumentIntelligenceDemo = () => {
                         {stat.icon ? (
                           <>
                             <stat.icon className="h-4 w-4 mx-auto mb-1" />
-                            Instant
+                            {stat.label}
                           </>
                         ) : (
                           stat.label
@@ -504,7 +610,7 @@ const DocumentIntelligenceDemo = () => {
               viewport={{ once: false, amount: 0.3 }}
             >
               <motion.span
-                className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium"
+                className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium "
                 whileHover={{
                   scale: 1.1,
                   rotate: 5,
@@ -522,7 +628,7 @@ const DocumentIntelligenceDemo = () => {
                   ease: "easeOut",
                 }}
               >
-                New Feature
+                {t.badge.text.title}
               </motion.span>
             </motion.div>
           </motion.div>

@@ -5,6 +5,7 @@ import interactiveWorkflowDemo from "./public/interactiveWorkflowDemo";
 import clientLogos from "./public/clientlogos";
 import mainFeatures from "./public/mainFeatures";
 import templates from "./public/templates";
+import documentIntelligence from "./public/documentIntelligence";
 
 const ro: Record<string, LanguageData> = {
   ro: {
@@ -15,6 +16,7 @@ const ro: Record<string, LanguageData> = {
       clientLogos,
       mainFeatures,
       templates,
+      documentIntelligence
     },
   },
 };
