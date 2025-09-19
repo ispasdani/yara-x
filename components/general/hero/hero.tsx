@@ -38,10 +38,10 @@ export default function Hero() {
 
   return (
     <section
-      className="relative overflow-hidden w-[80vw]"
+      className="relative overflow-hidden w-full"
       style={{ backgroundColor: "var(--background)" }}
     >
-      <div className="mx-auto px-6 py-24">
+      <div className="container mx-auto px-6 py-24">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left: fully SSR-visible text ✅ */}
           <div className="space-y-6">
