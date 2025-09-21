@@ -219,5 +219,34 @@ export interface LanguageData {
         subtitle: { title: string };
       };
     };
+    workflowVideo: {
+      title: { title: string };
+      description: { title: string };
+      primaryButtonText: { title: string };
+      secondaryButtonText: { title: string };
+      videoOverlay: {
+        title: { title: string };
+        subtitle: { title: string };
+      };
+      badge: { title: string };
+      features: {
+        visualBuilder: {
+          title: { title: string };
+          description: { title: string };
+        };
+        automatedTasks: {
+          title: { title: string };
+          description: { title: string };
+        };
+        teamCollaboration: {
+          title: { title: string };
+          description: { title: string };
+        };
+        timeTracking: {
+          title: { title: string };
+          description: { title: string };
+        };
+      };
+    };
   };
 }

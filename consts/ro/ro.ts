@@ -7,6 +7,7 @@ import mainFeatures from "./public/mainFeatures";
 import templates from "./public/templates";
 import documentIntelligence from "./public/documentIntelligence";
 import textEditor from "./public/textEditor";
+import workflowVideo from "./public/workflowVideo";
 
 const ro: Record<string, LanguageData> = {
   ro: {
@@ -18,7 +19,8 @@ const ro: Record<string, LanguageData> = {
       mainFeatures,
       templates,
       documentIntelligence,
-      textEditor
+      textEditor,
+      workflowVideo,
     },
   },
 };

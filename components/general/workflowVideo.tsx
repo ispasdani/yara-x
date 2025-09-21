@@ -1,33 +1,86 @@
-import { Play, Workflow, Zap, Users, Clock } from "lucide-react";
+"use client";
 
-const workflowFeatures = [
-  {
-    icon: Workflow,
-    title: "Visual Workflow Builder",
-    description:
-      "Drag-and-drop interface to create complex legal workflows without coding",
+import { Play, Workflow, Zap, Users, Clock } from "lucide-react";
+import { useLanguageData } from "@/hooks/useLanguageData";
+import type { LanguageData } from "@/types/languageDataTypes";
+
+// Default values for SSR/SEO
+const DEFAULT_WORKFLOW_VIDEO: LanguageData["public"]["workflowVideo"] = {
+  title: { title: "Create Custom Legal Workflows with AI" },
+  description: {
+    title:
+      "Our intelligent workflow agent understands your legal processes and automatically creates custom workflows tailored to your practice areas and client needs.",
   },
-  {
-    icon: Zap,
-    title: "Automated Tasks",
-    description:
-      "Automate document review, client communications, and case management",
+  primaryButtonText: { title: "Watch Demo" },
+  secondaryButtonText: { title: "Try Workflow Builder" },
+  videoOverlay: {
+    title: { title: "Legal Workflow Automation in Action" },
+    subtitle: {
+      title:
+        "Watch how our AI agent creates custom workflows for your practice",
+    },
   },
-  {
-    icon: Users,
-    title: "Team Collaboration",
-    description:
-      "Assign tasks, track progress, and collaborate seamlessly across your firm",
+  badge: { title: "New Feature" },
+  features: {
+    visualBuilder: {
+      title: { title: "Visual Workflow Builder" },
+      description: {
+        title:
+          "Drag-and-drop interface to create complex legal workflows without coding",
+      },
+    },
+    automatedTasks: {
+      title: { title: "Automated Tasks" },
+      description: {
+        title:
+          "Automate document review, client communications, and case management",
+      },
+    },
+    teamCollaboration: {
+      title: { title: "Team Collaboration" },
+      description: {
+        title:
+          "Assign tasks, track progress, and collaborate seamlessly across your firm",
+      },
+    },
+    timeTracking: {
+      title: { title: "Time Tracking" },
+      description: {
+        title:
+          "Built-in time tracking and billing integration for accurate client invoicing",
+      },
+    },
   },
-  {
-    icon: Clock,
-    title: "Time Tracking",
-    description:
-      "Built-in time tracking and billing integration for accurate client invoicing",
-  },
-];
+};
 
 const WorkflowVideo = () => {
+  const { langData } = useLanguageData();
+  const t = langData?.public.workflowVideo ?? DEFAULT_WORKFLOW_VIDEO;
+
+  // Create features array from the localized data
+  const workflowFeatures = [
+    {
+      icon: Workflow,
+      title: t.features.visualBuilder.title.title,
+      description: t.features.visualBuilder.description.title,
+    },
+    {
+      icon: Zap,
+      title: t.features.automatedTasks.title.title,
+      description: t.features.automatedTasks.description.title,
+    },
+    {
+      icon: Users,
+      title: t.features.teamCollaboration.title.title,
+      description: t.features.teamCollaboration.description.title,
+    },
+    {
+      icon: Clock,
+      title: t.features.timeTracking.title.title,
+      description: t.features.timeTracking.description.title,
+    },
+  ];
+
   return (
     <section className="py-24 bg-surface">
       <div className="container mx-auto px-6">
@@ -46,11 +99,10 @@ const WorkflowVideo = () => {
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="bg-card/90 backdrop-blur-sm rounded-lg p-4 border border-card-border">
                     <h4 className="font-serif text-lg font-semibold text-foreground mb-1">
-                      Legal Workflow Automation in Action
+                      {t.videoOverlay.title.title}
                     </h4>
                     <p className="text-sm text-muted-foreground">
-                      Watch how our AI agent creates custom workflows for your
-                      practice
+                      {t.videoOverlay.subtitle.title}
                     </p>
                   </div>
                 </div>
@@ -60,7 +112,7 @@ const WorkflowVideo = () => {
             {/* Badge */}
             <div className="absolute -top-4 -right-4">
               <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium">
-                New Feature
+                {t.badge.title}
               </span>
             </div>
           </div>
@@ -69,18 +121,16 @@ const WorkflowVideo = () => {
           <div>
             <div className="mb-12">
               <h2 className="text-5xl font-bold text-gray-900 mb-6 font-serif">
-                Create Custom Legal Workflows with AI
+                {t.title.title}
               </h2>
-              <p className="text-lead mb-8">
-                Our intelligent workflow agent understands your legal processes
-                and automatically creates custom workflows tailored to your
-                practice areas and client needs.
-              </p>
+              <p className="text-lead mb-8">{t.description.title}</p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="btn-hero">Watch Demo</button>
+                <button className="btn-hero">
+                  {t.primaryButtonText.title}
+                </button>
                 <button className="inline-flex items-center justify-center px-8 py-4 text-base font-medium bg-surface text-foreground rounded-lg border border-card-border hover:bg-surface-hover transition-colors">
-                  Try Workflow Builder
+                  {t.secondaryButtonText.title}
                 </button>
               </div>
             </div>
