@@ -3,6 +3,7 @@
 import { Play, Workflow, Zap, Users, Clock } from "lucide-react";
 import { useLanguageData } from "@/hooks/useLanguageData";
 import type { LanguageData } from "@/types/languageDataTypes";
+import { Button } from "../ui/button";
 
 // Default values for SSR/SEO
 const DEFAULT_WORKFLOW_VIDEO: LanguageData["public"]["workflowVideo"] = {
@@ -120,18 +121,21 @@ const WorkflowVideo = () => {
           {/* Content Section */}
           <div>
             <div className="mb-12">
-              <h2 className="text-5xl font-bold text-gray-900 mb-6 font-serif">
+              <h2 className="text-5xl font-bold leading-tight font-serif text-foreground">
                 {t.title.title}
               </h2>
               <p className="text-lead mb-8">{t.description.title}</p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="btn-hero">
+                <Button className="inline-flex items-center justify-center p-5 text-base font-medium rounded-lg cursor-pointer">
                   {t.primaryButtonText.title}
-                </button>
-                <button className="inline-flex items-center justify-center px-8 py-4 text-base font-medium bg-surface text-foreground rounded-lg border border-card-border hover:bg-surface-hover transition-colors">
+                </Button>
+                <Button
+                  variant="outline"
+                  className="hover:text-foreground cursor-pointer p-5"
+                >
                   {t.secondaryButtonText.title}
-                </button>
+                </Button>
               </div>
             </div>
 
