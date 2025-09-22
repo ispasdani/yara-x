@@ -248,5 +248,47 @@ export interface LanguageData {
         };
       };
     };
+    aiToneDemo: {
+      title: { title: string };
+      description: { title: string };
+      primaryButtonText: { title: string };
+      secondaryButtonText: { title: string };
+      badge: { title: string };
+      features: {
+        smartAdaptation: {
+          title: { title: string };
+          description: { title: string };
+        };
+        contentSimplification: {
+          title: { title: string };
+          description: { title: string };
+        };
+        clientFriendly: {
+          title: { title: string };
+          description: { title: string };
+        };
+        contextPreservation: {
+          title: { title: string };
+          description: { title: string };
+        };
+      };
+      demo: {
+        documentToneTitle: { title: string };
+        professionalLabel: { title: string };
+        simpleLabel: { title: string };
+        contractClauseLabel: { title: string };
+        professionalText: { title: string };
+        simpleText: { title: string };
+        readabilityScore: { title: string };
+        gradeLevel: { title: string };
+      };
+    };
+    cta: {
+      title: { title: string };
+      description: { title: string };
+      primaryButtonText: { title: string };
+      secondaryButtonText: { title: string };
+      subtitle: { title: string };
+    };
   };
 }

@@ -2,52 +2,111 @@
 
 import { useState, useEffect } from "react";
 import { Brain, FileText, Users, Sparkles } from "lucide-react";
+import { useLanguageData } from "@/hooks/useLanguageData";
+import type { LanguageData } from "@/types/languageDataTypes";
+import { Button } from "../ui/button";
 
-const toneFeatures = [
-  {
-    icon: Brain,
-    title: "Smart Language Adaptation",
-    description:
-      "AI automatically adjusts complexity based on your selected tone preference",
+// Default values for SSR/SEO
+const DEFAULT_AI_TONE_DEMO: LanguageData["public"]["aiToneDemo"] = {
+  title: { title: "AI-Powered Tone Adaptation for Everyone" },
+  description: {
+    title:
+      "Switch between professional and simple language instantly. Our AI ensures legal documents are accessible to clients while maintaining accuracy and compliance.",
   },
-  {
-    icon: FileText,
-    title: "Content Simplification",
-    description:
-      "Complex legal jargon transformed into clear, understandable language",
+  primaryButtonText: { title: "Try Tone Switcher" },
+  secondaryButtonText: { title: "Learn More" },
+  badge: { title: "AI Powered" },
+  features: {
+    smartAdaptation: {
+      title: { title: "Smart Language Adaptation" },
+      description: {
+        title:
+          "AI automatically adjusts complexity based on your selected tone preference",
+      },
+    },
+    contentSimplification: {
+      title: { title: "Content Simplification" },
+      description: {
+        title:
+          "Complex legal jargon transformed into clear, understandable language",
+      },
+    },
+    clientFriendly: {
+      title: { title: "Client-Friendly Output" },
+      description: {
+        title:
+          "Make legal documents accessible to clients without legal backgrounds",
+      },
+    },
+    contextPreservation: {
+      title: { title: "Context Preservation" },
+      description: {
+        title:
+          "Maintains legal accuracy while improving readability and comprehension",
+      },
+    },
   },
-  {
-    icon: Users,
-    title: "Client-Friendly Output",
-    description:
-      "Make legal documents accessible to clients without legal backgrounds",
+  demo: {
+    documentToneTitle: { title: "Document Tone" },
+    professionalLabel: { title: "Professional" },
+    simpleLabel: { title: "Simple" },
+    contractClauseLabel: { title: "Contract Clause" },
+    professionalText: {
+      title:
+        "The aforementioned party hereby agrees to indemnify and hold harmless the counterparty from any and all claims, damages, losses, costs, and expenses arising from or relating to the breach of any representations, warranties, or covenants contained herein.",
+    },
+    simpleText: {
+      title:
+        "You agree to protect and compensate us if any problems or costs arise because you didn't follow the terms of this agreement. This includes covering any legal fees or damages we might face.",
+    },
+    readabilityScore: { title: "Readability Score" },
+    gradeLevel: { title: "Grade Level" },
   },
-  {
-    icon: Sparkles,
-    title: "Context Preservation",
-    description:
-      "Maintains legal accuracy while improving readability and comprehension",
-  },
-];
-
-const professionalText = `The aforementioned party hereby agrees to indemnify and hold harmless the counterparty from any and all claims, damages, losses, costs, and expenses arising from or relating to the breach of any representations, warranties, or covenants contained herein.`;
-
-const simpleText = `You agree to protect and compensate us if any problems or costs arise because you didn't follow the terms of this agreement. This includes covering any legal fees or damages we might face.`;
+};
 
 const AIToneDemo = () => {
+  const { langData } = useLanguageData();
+  const t = langData?.public.aiToneDemo ?? DEFAULT_AI_TONE_DEMO;
+
   const [isSimpleTone, setIsSimpleTone] = useState(false);
-  const [displayText, setDisplayText] = useState(professionalText);
+  const [displayText, setDisplayText] = useState(t.demo.professionalText.title);
   const [isAnimating, setIsAnimating] = useState(false);
+
+  // Create features array from the localized data
+  const toneFeatures = [
+    {
+      icon: Brain,
+      title: t.features.smartAdaptation.title.title,
+      description: t.features.smartAdaptation.description.title,
+    },
+    {
+      icon: FileText,
+      title: t.features.contentSimplification.title.title,
+      description: t.features.contentSimplification.description.title,
+    },
+    {
+      icon: Users,
+      title: t.features.clientFriendly.title.title,
+      description: t.features.clientFriendly.description.title,
+    },
+    {
+      icon: Sparkles,
+      title: t.features.contextPreservation.title.title,
+      description: t.features.contextPreservation.description.title,
+    },
+  ];
 
   useEffect(() => {
     setIsAnimating(true);
     const timeout = setTimeout(() => {
-      setDisplayText(isSimpleTone ? simpleText : professionalText);
+      setDisplayText(
+        isSimpleTone ? t.demo.simpleText.title : t.demo.professionalText.title
+      );
       setIsAnimating(false);
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [isSimpleTone]);
+  }, [isSimpleTone, t.demo.simpleText.title, t.demo.professionalText.title]);
 
   const toggleTone = () => {
     setIsSimpleTone(!isSimpleTone);
@@ -60,20 +119,23 @@ const AIToneDemo = () => {
           {/* Content Section - Left */}
           <div>
             <div className="mb-12">
-              <h2 className="heading-section mb-6">
-                AI-Powered Tone Adaptation for Everyone
+              <h2 className="text-5xl font-bold leading-tight font-serif text-foreground">
+                {t.title.title}
               </h2>
-              <p className="text-lead mb-8">
-                Switch between professional and simple language instantly. Our
-                AI ensures legal documents are accessible to clients while
-                maintaining accuracy and compliance.
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed mt-3 mb-6">
+                {t.description.title}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="btn-hero">Try Tone Switcher</button>
-                <button className="inline-flex items-center justify-center px-8 py-4 text-base font-medium bg-surface text-foreground rounded-lg border border-card-border hover:bg-surface-hover transition-colors">
-                  Learn More
-                </button>
+                <Button className="inline-flex items-center justify-center p-5 text-base font-medium rounded-lg cursor-pointer">
+                  {t.primaryButtonText.title}
+                </Button>
+                <Button
+                  variant="outline"
+                  className="hover:text-foreground cursor-pointer p-5"
+                >
+                  {t.secondaryButtonText.title}
+                </Button>
               </div>
             </div>
 
@@ -100,13 +162,13 @@ const AIToneDemo = () => {
               {/* Toggle Control */}
               <div className="flex items-center justify-between mb-6">
                 <h4 className="font-serif text-lg font-semibold text-foreground">
-                  Document Tone
+                  {t.demo.documentToneTitle.title}
                 </h4>
                 <div className="flex items-center space-x-3">
                   <span
                     className={`text-sm font-medium transition-colors ${!isSimpleTone ? "text-primary" : "text-muted-foreground"}`}
                   >
-                    Professional
+                    {t.demo.professionalLabel.title}
                   </span>
                   <button
                     onClick={toggleTone}
@@ -123,7 +185,7 @@ const AIToneDemo = () => {
                   <span
                     className={`text-sm font-medium transition-colors ${isSimpleTone ? "text-primary" : "text-muted-foreground"}`}
                   >
-                    Simple
+                    {t.demo.simpleLabel.title}
                   </span>
                 </div>
               </div>
@@ -133,7 +195,7 @@ const AIToneDemo = () => {
                 <div className="flex items-center gap-2 mb-4">
                   <FileText className="h-4 w-4 text-muted-foreground" />
                   <span className="text-xs text-muted-foreground uppercase tracking-wide">
-                    Contract Clause
+                    {t.demo.contractClauseLabel.title}
                   </span>
                 </div>
 
@@ -168,7 +230,7 @@ const AIToneDemo = () => {
                     {isSimpleTone ? "95%" : "45%"}
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Readability Score
+                    {t.demo.readabilityScore.title}
                   </div>
                 </div>
                 <div className="text-center p-3 bg-primary/5 rounded-lg">
@@ -176,7 +238,7 @@ const AIToneDemo = () => {
                     {isSimpleTone ? "8th" : "16th"}
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Grade Level
+                    {t.demo.gradeLevel.title}
                   </div>
                 </div>
               </div>
@@ -185,7 +247,7 @@ const AIToneDemo = () => {
             {/* Badge */}
             <div className="absolute -top-4 -left-4">
               <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium">
-                AI Powered
+                {t.badge.title}
               </span>
             </div>
           </div>

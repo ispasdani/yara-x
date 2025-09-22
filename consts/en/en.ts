@@ -8,6 +8,8 @@ import templates from "./public/templates";
 import documentIntelligence from "./public/documentIntelligence";
 import textEditor from "./public/textEditor";
 import workflowVideo from "./public/workflowVideo";
+import aiToneDemo from "./public/aiToneDemo";
+import cta from "./public/cta";
 
 const en: Record<string, LanguageData> = {
   en: {
@@ -21,6 +23,8 @@ const en: Record<string, LanguageData> = {
       documentIntelligence,
       textEditor,
       workflowVideo,
+      aiToneDemo,
+      cta,
     },
   },
 };
