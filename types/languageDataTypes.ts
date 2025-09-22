@@ -290,5 +290,43 @@ export interface LanguageData {
       secondaryButtonText: { title: string };
       subtitle: { title: string };
     };
+    pricing: {
+      title: { title: string };
+      description: { title: string };
+      mostPopularBadge: { title: string };
+      getStartedButton: { title: string };
+      contactSalesButton: { title: string };
+      trialText: { title: string };
+      plans: {
+        oneTime: {
+          name: { title: string };
+          price: { title: string };
+          period: { title: string };
+          description: { title: string };
+          features: { title: string }[];
+        };
+        starter: {
+          name: { title: string };
+          price: { title: string };
+          period: { title: string };
+          description: { title: string };
+          features: { title: string }[];
+        };
+        professional: {
+          name: { title: string };
+          price: { title: string };
+          period: { title: string };
+          description: { title: string };
+          features: { title: string }[];
+        };
+        enterprise: {
+          name: { title: string };
+          price: { title: string };
+          period: { title: string };
+          description: { title: string };
+          features: { title: string }[];
+        };
+      };
+    };
   };
 }

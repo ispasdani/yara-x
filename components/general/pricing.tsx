@@ -1,86 +1,138 @@
-import { Check } from "lucide-react";
+"use client";
 
-const pricingPlans = [
-  {
-    name: "One-Time Use",
-    price: "$3.99",
-    period: "one-time",
-    description: "Perfect for a quick legal question or document review",
-    features: [
-      "Single-use AI consultation",
-      "One document analysis",
-      "Basic legal guidance",
-      "Email support",
-      "No expiry - use anytime",
-      "Instant access",
-    ],
-    popular: false,
+import { Check } from "lucide-react";
+import { useLanguageData } from "@/hooks/useLanguageData";
+import type { LanguageData } from "@/types/languageDataTypes";
+
+// Default values for SSR/SEO
+const DEFAULT_PRICING: LanguageData["public"]["pricing"] = {
+  title: { title: "Simple, Transparent Pricing" },
+  description: {
+    title:
+      "Choose the plan that fits your legal practice. All plans include our core AI features with no hidden fees.",
   },
-  {
-    name: "Starter Pack",
-    price: "$29",
-    period: "1,000 tokens",
-    description: "Perfect for trying out our AI legal assistant",
-    features: [
-      "1,000 AI tokens ($0.029 per token)",
-      "Unlimited document analysis",
-      "Advanced legal research",
-      "Custom workflow automation",
-      "90-day token expiry",
-      "API access",
-      "Priority support",
-      "Custom integrations",
-    ],
-    popular: true,
+  mostPopularBadge: { title: "Most Popular" },
+  getStartedButton: { title: "Get Started" },
+  contactSalesButton: { title: "Contact Sales" },
+  trialText: {
+    title: "All plans include a 14-day free trial. No credit card required.",
   },
-  {
-    name: "Professional Pack",
-    price: "$99",
-    period: "5,000 tokens",
-    description: "Maximum value for busy law practices",
-    features: [
-      "5,000 AI tokens ($0.0198 per token)",
-      "Unlimited document analysis",
-      "Advanced legal research",
-      "Custom workflow automation",
-      "90-day token expiry",
-      "API access",
-      "Priority support",
-      "Custom integrations",
-    ],
-    popular: false,
+  plans: {
+    oneTime: {
+      name: { title: "One-Time Use" },
+      price: { title: "$3.99" },
+      period: { title: "one-time" },
+      description: {
+        title: "Perfect for a quick legal question or document review",
+      },
+      features: [
+        { title: "Single-use AI consultation" },
+        { title: "One document analysis" },
+        { title: "Basic legal guidance" },
+        { title: "Email support" },
+        { title: "No expiry - use anytime" },
+        { title: "Instant access" },
+      ],
+    },
+    starter: {
+      name: { title: "Starter Pack" },
+      price: { title: "$29" },
+      period: { title: "1,000 tokens" },
+      description: { title: "Perfect for trying out our AI legal assistant" },
+      features: [
+        { title: "1,000 AI tokens ($0.029 per token)" },
+        { title: "Unlimited document analysis" },
+        { title: "Advanced legal research" },
+        { title: "Custom workflow automation" },
+        { title: "90-day token expiry" },
+        { title: "API access" },
+        { title: "Priority support" },
+        { title: "Custom integrations" },
+      ],
+    },
+    professional: {
+      name: { title: "Professional Pack" },
+      price: { title: "$99" },
+      period: { title: "5,000 tokens" },
+      description: { title: "Maximum value for busy law practices" },
+      features: [
+        { title: "5,000 AI tokens ($0.0198 per token)" },
+        { title: "Unlimited document analysis" },
+        { title: "Advanced legal research" },
+        { title: "Custom workflow automation" },
+        { title: "90-day token expiry" },
+        { title: "API access" },
+        { title: "Priority support" },
+        { title: "Custom integrations" },
+      ],
+    },
+    enterprise: {
+      name: { title: "Enterprise" },
+      price: { title: "Custom" },
+      period: { title: "50,000+ tokens" },
+      description: { title: "Unlimited power for large organizations" },
+      features: [
+        { title: "50,000+ tokens (volume pricing)" },
+        { title: "Custom AI model training" },
+        { title: "Dedicated infrastructure" },
+        { title: "No token expiry" },
+        { title: "White-label solutions" },
+        { title: "Advanced compliance tools" },
+        { title: "24/7 phone support" },
+        { title: "On-premise deployment" },
+      ],
+    },
   },
-  {
-    name: "Enterprise",
-    price: "Custom",
-    period: "50,000+ tokens",
-    description: "Unlimited power for large organizations",
-    features: [
-      "50,000+ tokens (volume pricing)",
-      "Custom AI model training",
-      "Dedicated infrastructure",
-      "No token expiry",
-      "White-label solutions",
-      "Advanced compliance tools",
-      "24/7 phone support",
-      "On-premise deployment",
-    ],
-    popular: false,
-  },
-];
+};
 
 const Pricing = () => {
+  const { langData } = useLanguageData();
+  const t = langData?.public.pricing ?? DEFAULT_PRICING;
+
+  // Create pricing plans array from the localized data
+  const pricingPlans = [
+    {
+      name: t.plans.oneTime.name.title,
+      price: t.plans.oneTime.price.title,
+      period: t.plans.oneTime.period.title,
+      description: t.plans.oneTime.description.title,
+      features: t.plans.oneTime.features.map((feature) => feature.title),
+      popular: false,
+    },
+    {
+      name: t.plans.starter.name.title,
+      price: t.plans.starter.price.title,
+      period: t.plans.starter.period.title,
+      description: t.plans.starter.description.title,
+      features: t.plans.starter.features.map((feature) => feature.title),
+      popular: true,
+    },
+    {
+      name: t.plans.professional.name.title,
+      price: t.plans.professional.price.title,
+      period: t.plans.professional.period.title,
+      description: t.plans.professional.description.title,
+      features: t.plans.professional.features.map((feature) => feature.title),
+      popular: false,
+    },
+    {
+      name: t.plans.enterprise.name.title,
+      price: t.plans.enterprise.price.title,
+      period: t.plans.enterprise.period.title,
+      description: t.plans.enterprise.description.title,
+      features: t.plans.enterprise.features.map((feature) => feature.title),
+      popular: false,
+    },
+  ];
+
   return (
     <section id="pricing" className="py-24 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-serif">
-            Simple, Transparent Pricing
+            {t.title.title}
           </h2>
-          <p className="text-lead max-w-2xl mx-auto">
-            Choose the plan that fits your legal practice. All plans include our
-            core AI features with no hidden fees.
-          </p>
+          <p className="text-lead max-w-2xl mx-auto">{t.description.title}</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-8xl mx-auto">
@@ -96,7 +148,7 @@ const Pricing = () => {
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                   <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
-                    Most Popular
+                    {t.mostPopularBadge.title}
                   </span>
                 </div>
               )}
@@ -135,7 +187,9 @@ const Pricing = () => {
                       : "bg-surface text-foreground border border-card-border hover:bg-surface-hover"
                   }`}
                 >
-                  {plan.price === "Custom" ? "Contact Sales" : "Get Started"}
+                  {plan.price === t.plans.enterprise.price.title
+                    ? t.contactSalesButton.title
+                    : t.getStartedButton.title}
                 </button>
               </div>
             </div>
@@ -143,9 +197,7 @@ const Pricing = () => {
         </div>
 
         <div className="text-center mt-16">
-          <p className="text-muted-foreground">
-            All plans include a 14-day free trial. No credit card required.
-          </p>
+          <p className="text-muted-foreground">{t.trialText.title}</p>
         </div>
       </div>
     </section>

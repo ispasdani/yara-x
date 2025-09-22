@@ -10,6 +10,7 @@ import textEditor from "./public/textEditor";
 import workflowVideo from "./public/workflowVideo";
 import aiToneDemo from "./public/aiToneDemo";
 import cta from "./public/cta";
+import pricing from "./public/pricing";
 
 const ro: Record<string, LanguageData> = {
   ro: {
@@ -25,6 +26,7 @@ const ro: Record<string, LanguageData> = {
       workflowVideo,
       aiToneDemo,
       cta,
+      pricing,
     },
   },
 };
