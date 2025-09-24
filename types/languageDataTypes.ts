@@ -358,5 +358,88 @@ export interface LanguageData {
         };
       };
     };
+    schedulingDemo: {
+      badge: { title: string };
+      title: { title: string };
+      description: { title: string };
+      sections: {
+        scheduledTasks: { title: string };
+        recentUpdates: { title: string };
+      };
+      buttons: {
+        newSchedule: { title: string };
+        viewAll: { title: string };
+        editSchedule: { title: string };
+        viewHistory: { title: string };
+        runNow: { title: string };
+        viewDetails: { title: string };
+        createSchedule: { title: string };
+        browseTemplates: { title: string };
+      };
+      status: {
+        active: { title: string };
+        paused: { title: string };
+      };
+      schedules: {
+        gdpr: {
+          title: { title: string };
+          description: { title: string };
+          frequency: { title: string };
+          lastRun: { title: string };
+          nextRun: { title: string };
+          category: { title: string };
+        };
+        employment: {
+          title: { title: string };
+          description: { title: string };
+          frequency: { title: string };
+          lastRun: { title: string };
+          nextRun: { title: string };
+          category: { title: string };
+        };
+        tax: {
+          title: { title: string };
+          description: { title: string };
+          frequency: { title: string };
+          lastRun: { title: string };
+          nextRun: { title: string };
+          category: { title: string };
+        };
+      };
+      updates: {
+        gdprUpdate: {
+          schedule: { title: string };
+          update: { title: string };
+          timestamp: { title: string };
+        };
+        employmentUpdate: {
+          schedule: { title: string };
+          update: { title: string };
+          timestamp: { title: string };
+        };
+        taxUpdate: {
+          schedule: { title: string };
+          update: { title: string };
+          timestamp: { title: string };
+        };
+      };
+      stats: {
+        title: { title: string };
+        updatesFound: { title: string };
+        highPriority: { title: string };
+        successRate: { title: string };
+      };
+      cta: {
+        title: { title: string };
+        description: { title: string };
+      };
+      labels: {
+        next: { title: string };
+        category: { title: string };
+        lastRun: { title: string };
+        highPriority: { title: string };
+        mediumPriority: { title: string };
+      };
+    };
   };
 }

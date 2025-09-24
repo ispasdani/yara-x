@@ -10,6 +10,7 @@ import Footer from "@/components/general/footer";
 import Hero from "@/components/general/hero/hero";
 import Pricing from "@/components/general/pricing";
 import TextEditorPreview from "@/components/general/richTextEditorPreview";
+import SchedulingDemo from "@/components/general/schedulingDemo";
 import Templates from "@/components/general/templates";
 import WorkflowVideo from "@/components/general/workflowVideo";
 
@@ -34,6 +35,7 @@ export default function Home() {
       <ClientLogos />
       <Features />
       <DocumentIntelligenceDemo />
+      <SchedulingDemo />
       <Templates />
       <TextEditorPreview />
       <WorkflowVideo />

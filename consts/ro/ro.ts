@@ -12,6 +12,7 @@ import aiToneDemo from "./public/aiToneDemo";
 import cta from "./public/cta";
 import pricing from "./public/pricing";
 import faq from "./public/faq";
+import schedulingDemo from "./public/schedulingDemo";
 
 const ro: Record<string, LanguageData> = {
   ro: {
@@ -29,6 +30,7 @@ const ro: Record<string, LanguageData> = {
       cta,
       pricing,
       faq,
+      schedulingDemo,
     },
   },
 };
