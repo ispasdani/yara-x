@@ -188,9 +188,11 @@ const Ambassador = () => {
               {t.badge.title}
             </Badge>
 
-            <h2 className="heading-section mb-6">{t.title.title}</h2>
+            <h2 className="text-5xl font-bold leading-tight font-serif text-foreground">
+              {t.title.title}
+            </h2>
 
-            <p className="text-lead max-w-3xl mx-auto mb-8">
+            <p className="text-lg leading-relaxed max-w-4xl mx-auto mt-4 text-muted-foreground">
               {t.description.title}
             </p>
           </div>
