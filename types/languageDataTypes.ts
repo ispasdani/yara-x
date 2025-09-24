@@ -513,5 +513,45 @@ export interface LanguageData {
         };
       };
     };
+    footer: {
+      brand: {
+        name: { title: string };
+        description: { title: string };
+      };
+      sections: {
+        product: {
+          title: { title: string };
+          links: {
+            features: { title: string };
+            pricing: { title: string };
+            security: { title: string };
+            api: { title: string };
+          };
+        };
+        company: {
+          title: { title: string };
+          links: {
+            about: { title: string };
+            careers: { title: string };
+            blog: { title: string };
+            press: { title: string };
+          };
+        };
+        support: {
+          title: { title: string };
+          links: {
+            helpCenter: { title: string };
+            contact: { title: string };
+            privacy: { title: string };
+            terms: { title: string };
+          };
+        };
+      };
+      copyright: { title: string };
+      socialLinks: {
+        twitter: { title: string };
+        linkedin: { title: string };
+      };
+    };
   };
 }

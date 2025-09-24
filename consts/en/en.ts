@@ -14,6 +14,7 @@ import pricing from "./public/pricing";
 import faq from "./public/faq";
 import schedulingDemo from "./public/schedulingDemo";
 import ambassador from "./public/ambassador";
+import footer from "./public/footer";
 
 const en: Record<string, LanguageData> = {
   en: {
@@ -33,6 +34,7 @@ const en: Record<string, LanguageData> = {
       faq,
       schedulingDemo,
       ambassador,
+      footer,
     },
   },
 };
