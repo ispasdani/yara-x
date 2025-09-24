@@ -441,5 +441,77 @@ export interface LanguageData {
         mediumPriority: { title: string };
       };
     };
+    ambassador: {
+      badge: { title: string };
+      title: { title: string };
+      description: { title: string };
+      stats: {
+        averageDealSize: { title: string };
+        commissionPerDeal: { title: string };
+        activeAmbassadors: { title: string };
+        successRate: { title: string };
+      };
+      benefits: {
+        title: { title: string };
+        commission: {
+          title: { title: string };
+          description: { title: string };
+        };
+        growingMarket: {
+          title: { title: string };
+          description: { title: string };
+        };
+        partnershipSupport: {
+          title: { title: string };
+          description: { title: string };
+        };
+        exclusiveBenefits: {
+          title: { title: string };
+          description: { title: string };
+        };
+      };
+      idealProfile: {
+        title: { title: string };
+        items: { title: string }[];
+      };
+      form: {
+        title: { title: string };
+        description: { title: string };
+        fields: {
+          fullName: { title: string };
+          email: { title: string };
+          company: { title: string };
+          experience: { title: string };
+        };
+        placeholders: {
+          name: { title: string };
+          email: { title: string };
+          company: { title: string };
+          experience: { title: string };
+        };
+        submitButton: { title: string };
+        contact: {
+          email: { title: string };
+          phone: { title: string };
+        };
+      };
+      howItWorks: {
+        title: { title: string };
+        steps: {
+          apply: {
+            title: { title: string };
+            description: { title: string };
+          };
+          refer: {
+            title: { title: string };
+            description: { title: string };
+          };
+          earn: {
+            title: { title: string };
+            description: { title: string };
+          };
+        };
+      };
+    };
   };
 }

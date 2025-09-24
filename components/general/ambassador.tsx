@@ -16,8 +16,122 @@ import {
   Target,
 } from "lucide-react";
 import { useState } from "react";
+import { useLanguageData } from "@/hooks/useLanguageData";
+import type { LanguageData } from "@/types/languageDataTypes";
+
+// Default values for SSR/SEO
+const DEFAULT_AMBASSADOR: LanguageData["public"]["ambassador"] = {
+  badge: { title: "Partnership Program" },
+  title: { title: "Become an Ambassador" },
+  description: {
+    title:
+      "Partner with us to revolutionize legal services. Earn significant commissions while helping law firms and legal professionals leverage cutting-edge AI technology.",
+  },
+  stats: {
+    averageDealSize: { title: "Average Deal Size" },
+    commissionPerDeal: { title: "Commission Per Deal" },
+    activeAmbassadors: { title: "Active Ambassadors" },
+    successRate: { title: "Success Rate" },
+  },
+  benefits: {
+    title: { title: "Why Partner With Us?" },
+    commission: {
+      title: { title: "30% Commission" },
+      description: {
+        title:
+          "Earn 30% recurring commission on every client you refer who becomes a paying customer",
+      },
+    },
+    growingMarket: {
+      title: { title: "Growing Market" },
+      description: {
+        title:
+          "Legal tech is booming - tap into a $30B+ market with high demand for AI solutions",
+      },
+    },
+    partnershipSupport: {
+      title: { title: "Partnership Support" },
+      description: {
+        title:
+          "Get dedicated support, marketing materials, and co-selling opportunities",
+      },
+    },
+    exclusiveBenefits: {
+      title: { title: "Exclusive Benefits" },
+      description: {
+        title:
+          "Access to beta features, priority support, and ambassador-only events",
+      },
+    },
+  },
+  idealProfile: {
+    title: { title: "Ideal Ambassador Profile" },
+    items: [
+      { title: "• Existing network in legal services" },
+      { title: "• Experience with B2B sales or consulting" },
+      { title: "• Understanding of legal workflows" },
+      { title: "• Passionate about legal technology" },
+    ],
+  },
+  form: {
+    title: { title: "Apply to Become an Ambassador" },
+    description: {
+      title:
+        "Tell us about yourself and let's explore this partnership opportunity together.",
+    },
+    fields: {
+      fullName: { title: "Full Name *" },
+      email: { title: "Email Address *" },
+      company: { title: "Company/Organization" },
+      experience: { title: "Tell us about your network and experience *" },
+    },
+    placeholders: {
+      name: { title: "John Smith" },
+      email: { title: "john@company.com" },
+      company: { title: "Your company name" },
+      experience: {
+        title:
+          "Describe your connections in the legal industry, relevant experience, and why you'd be a great ambassador...",
+      },
+    },
+    submitButton: { title: "Submit Application" },
+    contact: {
+      email: { title: "partnerships@company.com" },
+      phone: { title: "+1 (555) 123-LEGAL" },
+    },
+  },
+  howItWorks: {
+    title: { title: "How Our Ambassador Program Works" },
+    steps: {
+      apply: {
+        title: { title: "Apply & Get Approved" },
+        description: {
+          title:
+            "Submit your application and get approved within 48 hours. Receive your unique referral tracking links and materials.",
+        },
+      },
+      refer: {
+        title: { title: "Refer & Connect" },
+        description: {
+          title:
+            "Introduce qualified legal professionals to our platform. We'll handle demos, onboarding, and technical support.",
+        },
+      },
+      earn: {
+        title: { title: "Earn Commissions" },
+        description: {
+          title:
+            "Receive 30% monthly recurring commission for every successful referral. Payments processed automatically each month.",
+        },
+      },
+    },
+  },
+};
 
 const Ambassador = () => {
+  const { langData } = useLanguageData();
+  const t = langData?.public.ambassador ?? DEFAULT_AMBASSADOR;
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,38 +145,36 @@ const Ambassador = () => {
     console.log("Ambassador application:", formData);
   };
 
+  // Create benefits array from the localized data
   const benefits = [
     {
       icon: DollarSign,
-      title: "30% Commission",
-      description:
-        "Earn 30% recurring commission on every client you refer who becomes a paying customer",
+      title: t.benefits.commission.title.title,
+      description: t.benefits.commission.description.title,
     },
     {
       icon: TrendingUp,
-      title: "Growing Market",
-      description:
-        "Legal tech is booming - tap into a $30B+ market with high demand for AI solutions",
+      title: t.benefits.growingMarket.title.title,
+      description: t.benefits.growingMarket.description.title,
     },
     {
       icon: Handshake,
-      title: "Partnership Support",
-      description:
-        "Get dedicated support, marketing materials, and co-selling opportunities",
+      title: t.benefits.partnershipSupport.title.title,
+      description: t.benefits.partnershipSupport.description.title,
     },
     {
       icon: Crown,
-      title: "Exclusive Benefits",
-      description:
-        "Access to beta features, priority support, and ambassador-only events",
+      title: t.benefits.exclusiveBenefits.title.title,
+      description: t.benefits.exclusiveBenefits.description.title,
     },
   ];
 
+  // Create stats array from the localized data
   const stats = [
-    { label: "Average Deal Size", value: "$2,400/year" },
-    { label: "Commission Per Deal", value: "$720/year" },
-    { label: "Active Ambassadors", value: "150+" },
-    { label: "Success Rate", value: "78%" },
+    { label: t.stats.averageDealSize.title, value: "$2,400/year" },
+    { label: t.stats.commissionPerDeal.title, value: "$720/year" },
+    { label: t.stats.activeAmbassadors.title, value: "150+" },
+    { label: t.stats.successRate.title, value: "78%" },
   ];
 
   return (
@@ -73,15 +185,13 @@ const Ambassador = () => {
           <div className="text-center mb-20">
             <Badge variant="outline" className="mb-6 px-4 py-2">
               <Users className="h-4 w-4 mr-2" />
-              Partnership Program
+              {t.badge.title}
             </Badge>
 
-            <h2 className="heading-section mb-6">Become an Ambassador</h2>
+            <h2 className="heading-section mb-6">{t.title.title}</h2>
 
             <p className="text-lead max-w-3xl mx-auto mb-8">
-              Partner with us to revolutionize legal services. Earn significant
-              commissions while helping law firms and legal professionals
-              leverage cutting-edge AI technology.
+              {t.description.title}
             </p>
           </div>
 
@@ -106,7 +216,7 @@ const Ambassador = () => {
             {/* Benefits */}
             <div>
               <h3 className="text-2xl font-semibold text-foreground mb-8">
-                Why Partner With Us?
+                {t.benefits.title.title}
               </h3>
 
               <div className="space-y-6 mb-8">
@@ -134,13 +244,12 @@ const Ambassador = () => {
               <Card className="p-6 bg-primary/5 border-primary/20">
                 <h4 className="font-semibold text-foreground mb-4 flex items-center">
                   <Target className="h-5 w-5 mr-2 text-primary" />
-                  Ideal Ambassador Profile
+                  {t.idealProfile.title.title}
                 </h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Existing network in legal services</li>
-                  <li>• Experience with B2B sales or consulting</li>
-                  <li>• Understanding of legal workflows</li>
-                  <li>• Passionate about legal technology</li>
+                  {t.idealProfile.items.map((item, index) => (
+                    <li key={index}>{item.title}</li>
+                  ))}
                 </ul>
               </Card>
             </div>
@@ -149,11 +258,10 @@ const Ambassador = () => {
             <Card className="p-8">
               <div className="mb-6">
                 <h3 className="text-2xl font-semibold text-foreground mb-2">
-                  Apply to Become an Ambassador
+                  {t.form.title.title}
                 </h3>
                 <p className="text-muted-foreground">
-                  Tell us about yourself and let&apos;s explore this partnership
-                  opportunity together.
+                  {t.form.description.title}
                 </p>
               </div>
 
@@ -161,7 +269,7 @@ const Ambassador = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Full Name *
+                      {t.form.fields.fullName.title}
                     </label>
                     <Input
                       required
@@ -169,12 +277,12 @@ const Ambassador = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      placeholder="John Smith"
+                      placeholder={t.form.placeholders.name.title}
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Email Address *
+                      {t.form.fields.email.title}
                     </label>
                     <Input
                       type="email"
@@ -183,27 +291,27 @@ const Ambassador = () => {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      placeholder="john@company.com"
+                      placeholder={t.form.placeholders.email.title}
                     />
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Company/Organization
+                    {t.form.fields.company.title}
                   </label>
                   <Input
                     value={formData.company}
                     onChange={(e) =>
                       setFormData({ ...formData, company: e.target.value })
                     }
-                    placeholder="Your company name"
+                    placeholder={t.form.placeholders.company.title}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Tell us about your network and experience *
+                    {t.form.fields.experience.title}
                   </label>
                   <Textarea
                     required
@@ -211,14 +319,14 @@ const Ambassador = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
                     }
-                    placeholder="Describe your connections in the legal industry, relevant experience, and why you'd be a great ambassador..."
+                    placeholder={t.form.placeholders.experience.title}
                     className="min-h-[120px]"
                   />
                 </div>
 
                 <Button type="submit" className="w-full btn-hero">
                   <Handshake className="h-4 w-4 mr-2" />
-                  Submit Application
+                  {t.form.submitButton.title}
                 </Button>
               </form>
 
@@ -226,11 +334,11 @@ const Ambassador = () => {
                 <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
                   <div className="flex items-center">
                     <Mail className="h-4 w-4 mr-2" />
-                    partnerships@company.com
+                    {t.form.contact.email.title}
                   </div>
                   <div className="flex items-center">
                     <Phone className="h-4 w-4 mr-2" />
-                    +1 (555) 123-LEGAL
+                    {t.form.contact.phone.title}
                   </div>
                 </div>
               </div>
@@ -240,7 +348,7 @@ const Ambassador = () => {
           {/* How It Works */}
           <div className="mt-20">
             <h3 className="text-2xl font-semibold text-foreground text-center mb-12">
-              How Our Ambassador Program Works
+              {t.howItWorks.title.title}
             </h3>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -249,11 +357,10 @@ const Ambassador = () => {
                   <span className="text-lg font-bold text-primary">1</span>
                 </div>
                 <h4 className="font-semibold text-foreground mb-2">
-                  Apply & Get Approved
+                  {t.howItWorks.steps.apply.title.title}
                 </h4>
                 <p className="text-sm text-muted-foreground">
-                  Submit your application and get approved within 48 hours.
-                  Receive your unique referral tracking links and materials.
+                  {t.howItWorks.steps.apply.description.title}
                 </p>
               </Card>
 
@@ -262,11 +369,10 @@ const Ambassador = () => {
                   <span className="text-lg font-bold text-primary">2</span>
                 </div>
                 <h4 className="font-semibold text-foreground mb-2">
-                  Refer & Connect
+                  {t.howItWorks.steps.refer.title.title}
                 </h4>
                 <p className="text-sm text-muted-foreground">
-                  Introduce qualified legal professionals to our platform.
-                  We&apos;ll handle demos, onboarding, and technical support.
+                  {t.howItWorks.steps.refer.description.title}
                 </p>
               </Card>
 
@@ -275,11 +381,10 @@ const Ambassador = () => {
                   <span className="text-lg font-bold text-primary">3</span>
                 </div>
                 <h4 className="font-semibold text-foreground mb-2">
-                  Earn Commissions
+                  {t.howItWorks.steps.earn.title.title}
                 </h4>
                 <p className="text-sm text-muted-foreground">
-                  Receive 30% monthly recurring commission for every successful
-                  referral. Payments processed automatically each month.
+                  {t.howItWorks.steps.earn.description.title}
                 </p>
               </Card>
             </div>
