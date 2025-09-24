@@ -328,5 +328,35 @@ export interface LanguageData {
         };
       };
     };
+    faq: {
+      title: { title: string };
+      description: { title: string };
+      questions: {
+        documentTypes: {
+          question: { title: string };
+          answer: { title: string };
+        };
+        accuracy: {
+          question: { title: string };
+          answer: { title: string };
+        };
+        dataSecurity: {
+          question: { title: string };
+          answer: { title: string };
+        };
+        legalAdvice: {
+          question: { title: string };
+          answer: { title: string };
+        };
+        subscriptionPlans: {
+          question: { title: string };
+          answer: { title: string };
+        };
+        oneTimeUse: {
+          question: { title: string };
+          answer: { title: string };
+        };
+      };
+    };
   };
 }

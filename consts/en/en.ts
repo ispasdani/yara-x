@@ -11,6 +11,7 @@ import workflowVideo from "./public/workflowVideo";
 import aiToneDemo from "./public/aiToneDemo";
 import cta from "./public/cta";
 import pricing from "./public/pricing";
+import faq from "./public/faq";
 
 const en: Record<string, LanguageData> = {
   en: {
@@ -27,6 +28,7 @@ const en: Record<string, LanguageData> = {
       aiToneDemo,
       cta,
       pricing,
+      faq,
     },
   },
 };
