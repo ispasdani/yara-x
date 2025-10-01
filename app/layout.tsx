@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import ConvexClientProvider from "./providers/ConvexClientProvider";
-import Navbar from "@/components/general/nav";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import LanguageSelector from "@/components/general/LanguageSelector";
 
@@ -78,7 +77,6 @@ export default function RootLayout({
       >
         <ConvexClientProvider>
           <TooltipProvider>
-            <Navbar />
             <main className="relative">{children}</main>
             <LanguageSelector />
           </TooltipProvider>

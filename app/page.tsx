@@ -8,6 +8,7 @@ import FAQ from "@/components/general/faq";
 import Features from "@/components/general/features";
 import Footer from "@/components/general/footer";
 import Hero from "@/components/general/hero/hero";
+import Navbar from "@/components/general/nav";
 import Pricing from "@/components/general/pricing";
 import TextEditorPreview from "@/components/general/richTextEditorPreview";
 import SchedulingDemo from "@/components/general/schedulingDemo";
@@ -25,6 +26,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
+      <Navbar />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
