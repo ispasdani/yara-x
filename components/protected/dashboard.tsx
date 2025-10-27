@@ -4,18 +4,12 @@ import {
   MessageSquare,
   Settings,
   BarChart3,
-  Upload,
-  History,
-  Menu,
-  X,
   CreditCard,
   Star,
   Workflow,
   Clock,
-  Brain,
   Edit,
   Layout,
-  Mic,
   Plus,
   Check,
   ChevronDown,
@@ -42,7 +36,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { WorkspaceModal } from "@/components/WorkspaceModal";
+import { WorkspaceModal } from "./workspaceModal";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
